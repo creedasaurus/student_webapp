@@ -1,0 +1,172 @@
+/*
+-- CSS Arrangement --
+---------------------
+1. General
+    - affects all elements
+---------------------
+2. Table View
+    - elements specific to 
+    the table view
+---------------------
+3. Tile View
+    - elements specific to 
+    the tile view
+---------------------
+4. Modal Views
+
+*/
+
+/*-- 1. General     -----------------------------*/
+/*================================================*/
+
+body {
+    background-color: #85C4ED;
+}
+
+.jumbotron {
+    background-color: #fff;
+    padding: 20px;
+}
+
+#viewIcon {
+    font-size: 17px;
+    margin-right: 5px;
+}
+
+
+li > a {
+    cursor: pointer;
+    margin: 0px 5px 0px 5px;
+}
+
+.navbar-nav > li:hover {
+    background-color: #1AC9A7;
+}
+
+.alert {
+    width: 85%;
+}
+
+
+/*-- 2. Table View   -----------------------------*/
+/*================================================*/
+table {
+    background-color: #fff;
+}
+
+th > span {
+    float: right;
+    margin-top: 3px;
+}
+
+.thead-color {
+    background-color: #18bc9c;
+    color: #fff;
+}
+
+.orderTable {
+    cursor: pointer;
+}
+
+.orderTable:hover {
+     background-color: #1AC9A7;
+}
+
+.actionCol {
+    cursor: default;
+}
+
+.editCol {
+    cursor: pointer;
+}
+.editCol:hover {
+    background-color: #23A40C;
+}
+.editCol:hover > .editItemButton {
+    color: black;
+}
+
+
+.deleteCol {
+    cursor: pointer;
+}
+.deleteCol:hover {
+    background-color: #DB0C00;
+}
+.deleteCol:hover > .deleteItemButton {
+    color: black;
+}
+
+
+
+.editItemButton {
+    color: green;
+}
+.deleteItemButton {
+    color: red;
+}
+
+
+
+
+/*-- 2. Tile View    -----------------------------*/
+/*================================================*/
+
+#tile-view {
+    display: none;
+}
+
+.studentPicture {
+    width: 100px;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.clickRow:hover {
+    cursor: pointer;
+}
+
+.panel {
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.panel:hover {
+    background-color: #dddddd;
+    border-color: #217dbb;
+}
+
+
+/*-- 2. Modals    -----------------------------*/
+/*================================================*/
+
+#modalPicture {
+    width: 10em;
+}
+
+#studentModalDataFrame {
+    margin: auto;
+}
+
+.studentModalData {
+    margin: auto;
+    width: 200px;
+    text-align: left;
+}
+
+.restorItemButton {
+    color: #18bc9c;
+}
+
+.restCol:hover {
+    cursor: pointer;
+    background-color: #079FEF;
+}
+
+.restCol:hover > .restorItemButton {
+    color: black;
+}
+
+#confirmDeleteButton {
+    margin: 0 auto;
+}

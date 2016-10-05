@@ -1,0 +1,11 @@
+{
+	"fname": "<script type=\"text/javascript\"> document.getElementById('click_me').addEventListener(\"click\", function(event) {     (function(event) {         alert(this);     }).call(document.getElementById('click_me'), event); }); </script>",
+	"lname": "",
+	"phone": "",
+	"startDate": "",
+	"year": "",
+	"street": "",
+	"city": "",
+	"state": "",
+	"zip": ""
+}
