@@ -37,14 +37,14 @@ $(document).ready(function() {
     let studentList;
     let getStudentCalls = [];
     
-    $.get('http://stoopclub.ddns.net/api/v1/students.json', function(data) {
+    $.get('/api/v1/students.json', function(data) {
         studentList = data;
     }).done(function() {
 
 
     // For 10 students, get the info
         for (let i = 0; i < 10; i++) {
-            getStudentCalls.push($.get(`http://stoopclub.ddns.net/api/v1/students/${studentList[i]}.json`, function(student) {
+            getStudentCalls.push($.get(`/api/v1/students/${studentList[i]}.json`, function(student) {
                 student.id = studentList[i];
                 students.push(student);
             }));
@@ -117,7 +117,7 @@ $(document).ready(function() {
 
     // Handles POSTing the new student
     function newStudentPost(stu) {
-        $.post(`http://stoopclub.ddns.net/api/v1/students`, stu, function(newID) {
+        $.post(`/api/v1/students`, stu, function(newID) {
             stu.id = newID; // assign new ID to the student being restored
             students.push(stu);
         });
@@ -179,7 +179,7 @@ $(document).ready(function() {
     function editStudentPut(stu) {
         let editedStudent = JSON.parse(JSON.stringify(stu));
         $.ajax({
-                url: `http://stoopclub.ddns.net/api/v1/students/${popStudentID(editedStudent)}.json`,
+                url: `/api/v1/students/${popStudentID(editedStudent)}.json`,
                 type: 'PUT',
                 data: editedStudent
             });
@@ -215,7 +215,7 @@ $(document).ready(function() {
 
                 // DELETE AJAX
                 $.ajax({
-                        url: `http://stoopclub.ddns.net/api/v1/students/${selectedStu.id}.json`,
+                        url: `/api/v1/students/${selectedStu.id}.json`,
                         type: 'DELETE'
                     });
             });
@@ -257,7 +257,7 @@ $(document).ready(function() {
         delete studentToSend.id;
             
         // The server will post a new student and send back the new ID for that student. 
-        $.post(`http://stoopclub.ddns.net/api/v1/students`, studentToSend, function(newID) {
+        $.post(`/api/v1/students`, studentToSend, function(newID) {
             deletedStudents[studentIndex].id = newID; // assign new ID to the student being restored
             students.push(deletedStudents[studentIndex]);
         })
@@ -305,7 +305,7 @@ $(document).ready(function() {
                         <div id="${students[studentIndex].fname}-${students[studentIndex].lname}" class="panel-body">
                             <div id="studentModalDataFrame">
                                 <div class="studentModalData">
-                                    <img id="modalPicture" src="http://stoopclub.ddns.net/student-images/${students[studentIndex].lname}-${students[studentIndex].fname}.png" class="studentPicture">
+                                    <img id="modalPicture" src="/student-images/${students[studentIndex].lname}-${students[studentIndex].fname}.png" class="studentPicture">
                                     <p><b>Year: </b>${getYearInSchool(students[studentIndex].year)}</p>
                                     <p><b>Start Date: </b>${students[studentIndex].startDate}</p>
                                     <p><b>Phone: </b>${students[studentIndex].phone}</p>
@@ -454,7 +454,7 @@ $(document).ready(function() {
                     <div  class="panel-heading ">
                         <h3 class="panel-title"> ${student.lname}, ${student.fname} </h3>
                     </div>
-                    <div class="panel-body text-center"><img src="http://stoopclub.ddns.net/student-images/${student.lname}-${student.fname}.png" class="studentPicture"></div>
+                    <div class="panel-body text-center"><img src="/student-images/${student.lname}-${student.fname}.png" class="studentPicture"></div>
                 </div>
             </div>`);
         });
