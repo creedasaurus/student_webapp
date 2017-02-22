@@ -1,23 +1,22 @@
 console.log('Loading Server');
 const WEB = __dirname.replace('server', 'web');
 const SERV = __dirname + '/server';
-const PUB = __dirname.replace('server', 'public');
-// __dirname === /home/ubuntu/workspace/students/server
+
 
 //===================== Get Primary Modules =======================
-var express = require('express');
-var fs = require('fs');
+let express = require('express');
+let fs = require('fs');
 
 //===================== Get Middleware Modules =======================
-var logger = require('morgan');
-var compression = require('compression');
-var favicon = require('serve-favicon');
-var bodyParser = require('body-parser');
-
+let logger = require('morgan');
+let compression = require('compression');
+let favicon = require('serve-favicon');
+let bodyParser = require('body-parser');
+let mysql = require('mysql2');
 
 
 //====================== Create EXPRESS App =======================
-var app = express();
+let app = express();
 app.disable('x-powered-by');
 
 // insert middleware
@@ -28,42 +27,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
 
+let connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'test_usr',
+    password: 'Pass1234$$$',
+    database: 'students',
+    dateStrings: 'true'
+});
 
-
-//======================= FILE LIST DATA =======================
-console.log("Checking File System");
-var jsonFileList = fs.readdirSync(__dirname + '/students').map(fileName => fileName.replace('.json', ''));
-
-
-
-//======================= ID CREATION =========================
-
-const ID_LENGTH = 4;
-
-// ~~ leadingZeros
-// helps make ID's formated properly
-function leadingZeros(number, spaces) {
-    var id = `${number}`;
-    while (id.length < spaces) {
-        id = '0' + id;
+connection.connect(function(err) {
+    if (err) {
+        console.error('error connecting: ' + err.stack);
+        return;
     }
-    return id;
-}
 
-// ~~ createID
-// generator function that continues to generate ID's
-function* createID() {
-    // gets the largest student number from the file-list
-    var startingID = Math.max.apply(null, jsonFileList.map(fileName => parseInt(fileName)));
-    startingID++;
-    while (true) {
-        var newID = leadingZeros(startingID++, ID_LENGTH);
-        jsonFileList.push(newID);
-        yield newID;
-    }
-}
-var getID = createID();
-
+    console.log('connected as id ' + connection.threadId);
+});
 
 
 
@@ -72,12 +51,22 @@ var getID = createID();
 // CREATE
 // - POST
 app.post('/api/v1/students', function(req, res) {
-    var student = JSON.stringify(req.body, null, '\t');
-    var stuID = getID.next().value;
-    
-    fs.writeFile(`${__dirname}/students/${stuID}.json`, student, 'utf8');
-    
-    res.status(201).json(stuID);
+    // let student = JSON.stringify(req.body, null, '\t');
+    let student = req.body;
+    // console.log(student);
+    // console.log(student.fname);
+    connection.query('INSERT INTO s_info (fname, lname, startDate, street, city, state, zip, phone, s_year) VALUES (?,?,?,?,?,?,?,?,?)',
+        [student.fname, student.lname, student.startDate, student.street, student.city, student.state, student.zip, student.phone, student.s_year],
+        function (err, results, field) {
+            if (err) throw err;
+            let newId = "";
+
+            connection.query('SELECT id FROM s_info ORDER BY id DESC LIMIT 1', function (err, rslts, field) {
+                newId = rslts[0].id;
+            }).on('end', function () {
+                res.status(201).json(newId);
+            });
+    });
 });
 
 
@@ -85,12 +74,12 @@ app.post('/api/v1/students', function(req, res) {
 // READ
 // - GET :: just one student (specified in URL)
 app.get('/api/v1/students/:id.json', function(req, res) {
-    var id = req.params.id;
-    var fileReceived;
-    fs.readFile(`${__dirname}/students/${id}.json`, 'utf8', function(err, file) {
-        if (err) console.log("Resource not there");
-        
-        res.status(200).json(JSON.parse(file));
+    let id = req.params.id;
+    // let fileReceived;
+    console.log(id)
+
+    connection.query('SELECT * FROM s_info WHERE id=?', [id], function (error, results, fields) {
+        res.status(200).json(results[0]);
     });
 });
 
@@ -99,8 +88,8 @@ app.get('/api/v1/students/:id.json', function(req, res) {
 // UPDATE
 // PUT a student (specified and given data);
 app.put('/api/v1/students/:id.json', function(req, res) {
-    var id = req.params.id;
-    var updatedStudent = JSON.stringify(req.body, null, '\t');
+    let id = req.params.id;
+    let updatedStudent = JSON.stringify(req.body, null, '\t');
 
     fs.writeFile(`${__dirname}/students/${id}.json`, updatedStudent, 'utf8', function(err){
         if (err) console.log(err);
@@ -115,18 +104,18 @@ app.put('/api/v1/students/:id.json', function(req, res) {
 // DELETE
 // - DELETE
 app.delete('/api/v1/students/:id.json', function(req, res) {
-    var id = req.params.id;
-    var indexOfID = jsonFileList.indexOf(id);
+    let id = req.params.id;
+    // let indexOfID = jsonFileList.indexOf(id);
+    console.log(id);
 
-    // If index doesn't exist send 404
-    if (indexOfID === -1) {
-        res.status(404).sendFile(WEB + '/404Error.html');
-    }
-    else { // else the ID/file exists, delete it from list and unlink file
-        jsonFileList.splice(indexOfID, 1);
-        fs.unlink(`${__dirname}/students/${id}.json`);
+    connection.query('UPDATE s_info SET active=FALSE WHERE id=?', [id], function(err, rslts, flds) {
+        if (err) {
+            res.status(404).sendFile(WEB + '/404Error.html');
+        }
+
+    }).on('end', function() {
         res.sendStatus(204);
-    }
+    });
 });
 
 
@@ -136,28 +125,36 @@ app.delete('/api/v1/students/:id.json', function(req, res) {
 // LIST
 // - GET
 app.get('/api/v1/students.json', function(req, res) {
-    res.status(200).json(jsonFileList);
+    let ids = [];
+    connection.query('SELECT id FROM s_info WHERE active = ?', [],function (error, results, fields) {
+
+        if (error) {
+            console.log("Error: " + error);
+        } else {
+            for (let stu in results) {
+                ids.push(results[stu].id);
+            }
+            console.log(ids);
+            res.status(200).json(ids);
+        }
+    });
 });
 
 //====================== ^^ END REST API ^^ =======================
 
 
-
-
-
 //====================== STATIC FILES =======================
 app.use(express.static(WEB)); //Website Files
-app.use(express.static(PUB)); //public files (images)
-app.get('*', function(req, res) {
+app.use('/api/student-images', express.static('student-images')); //Student images
+app.get('*', function (req, res) {
     res.status(404).sendFile(WEB + '/404Error.html');
 });
 
 
-
 //====================== START SERVER =======================
 
-var portNum = 8080
-var server = app.listen(portNum, process.env.IP, function(){
+let portNum = 8080
+let server = app.listen(portNum, process.env.IP, function(){
     console.log("Server Running on " + portNum);
 
 });
@@ -167,6 +164,12 @@ var server = app.listen(portNum, process.env.IP, function(){
 //====================== SHUTDOWN HANDLING =======================
 function gracefullShutdown() {
     console.log('\nStarting Shutdown');
+
+    console.log('\nClosing mysql connection');
+    connection.end(function (err) {
+        console.log('\nmysql closed');
+    });
+
     server.close(function() {
         console.log('\nShutdown Complete');
     });
@@ -182,8 +185,3 @@ process.on('SIGINT', function() {
 
 // SIGKILL (kill -9) can't be caught by any process, including node
 // SIGSTP/SIGCONT (stop/continue)
-
-
-
-//======================== END SETUP =======================
-// SERVER IS A GO!!! 
