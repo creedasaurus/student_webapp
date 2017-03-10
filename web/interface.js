@@ -13,7 +13,7 @@ let schoolYears = {
 }
 
 //======+ getYearInSchool +======
-// returns the name of the grade given the year in school
+// returns the name of the grade given the s_year in school
 function getYearInSchool(grade) {
     return schoolYears[grade];
 }
@@ -93,7 +93,7 @@ $(document).ready(function() {
                 newStu.lname = $('#inputLastName').val();
                 newStu.phone = $('#inputPhone').val();
                 newStu.startDate = $('#inputStartDate').val();
-                newStu.year = $('#yearInSchool').val();
+                newStu.s_year = $('#yearInSchool').val();
                 newStu.street = $('#inputAddressL1').val();
                 newStu.city =  $('#inputCity').val();
                 newStu.state = $('#inputState').val();
@@ -132,7 +132,7 @@ $(document).ready(function() {
             $('#inputLastName').val(selectedStu.lname);
             $('#inputPhone').val(selectedStu.phone);
             $('#inputStartDate').val(selectedStu.startDate);
-            $('#yearInSchool').val(selectedStu.year);
+            $('#yearInSchool').val(selectedStu.s_year);
             $('#inputAddressL1').val(selectedStu.street);
             $('#inputCity').val(selectedStu.city);
             $('#inputState').val(selectedStu.state);
@@ -147,7 +147,7 @@ $(document).ready(function() {
                 selectedStu.lname = $('#inputLastName').val();
                 selectedStu.phone = $('#inputPhone').val();
                 selectedStu.startDate = $('#inputStartDate').val();
-                selectedStu.year = $('#yearInSchool').val();
+                selectedStu.s_year = $('#yearInSchool').val();
                 selectedStu.street = $('#inputAddressL1').val();
                 selectedStu.city =  $('#inputCity').val();
                 selectedStu.state = $('#inputState').val();
@@ -297,7 +297,7 @@ $(document).ready(function() {
                             <div id="studentModalDataFrame">
                                 <div class="studentModalData">
                                     <img id="modalPicture" src="/student-images/${students[studentIndex].lname}-${students[studentIndex].fname}.png" class="studentPicture">
-                                    <p><b>Year: </b>${getYearInSchool(students[studentIndex].year)}</p>
+                                    <p><b>Year: </b>${getYearInSchool(students[studentIndex].s_year)}</p>
                                     <p><b>Start Date: </b>${students[studentIndex].startDate}</p>
                                     <p><b>Phone: </b>${students[studentIndex].phone}</p>
                                     <p><b>Address: </b><br/>${students[studentIndex].street}<br/>${students[studentIndex].city}, ${students[studentIndex].state} ${students[studentIndex].zip}</p>
@@ -342,17 +342,6 @@ $(document).ready(function() {
             }
         }
     }
-
-
-//===========^===========^===========^==================^=============
-//====================================================================
-
-
-
-
-
-
-
 
 
 
@@ -428,7 +417,7 @@ $(document).ready(function() {
             $('#studentDataTable').append(
                 `<tr id="${index}" >
                 <td class="clickRow"> ${student.lname}, ${student.fname} </td>
-                <td class="clickRow"> ${getYearInSchool(student.year)} </td>
+                <td class="clickRow"> ${getYearInSchool(student.s_year)} </td>
                 <td class="clickRow hidden-xs"> ${student.startDate} </td>
                 <td class="clickRow hidden-md hidden-sm hidden-xs"> ${student.city} </td>
                 <td class="clickRow hidden-sm hidden-xs"> ${student.state} </td>

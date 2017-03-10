@@ -1,6 +1,6 @@
 console.log('Loading Server');
-const WEB = __dirname.replace('server', 'web');
-const SERV = __dirname + '/server';
+const WEB = __dirname + '/web';
+// const SERV = __dirname + '/server';
 
 
 //===================== Get Primary Modules =======================
@@ -13,24 +13,25 @@ let compression = require('compression');
 let favicon = require('serve-favicon');
 let bodyParser = require('body-parser');
 let mysql = require('mysql2');
+let pswds = require('./pswd');
 
 
 //====================== Create EXPRESS App =======================
 let app = express();
-app.disable('x-powered-by');
 
+app.disable('x-powered-by');
 // insert middleware
 app.use(logger('dev'));
 app.use(compression());
 app.use(favicon(WEB + '/img/favicon.ico'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
 
+app.use(bodyParser.urlencoded({ extended: true}));
 
 let connection = mysql.createConnection({
     host: 'localhost',
-    user: 'test_usr',
-    password: 'Pass1234$$$',
+    user: pswds.mysql.user,
+    password: pswds.mysql.password,
     database: 'students',
     dateStrings: 'true'
 });
@@ -126,7 +127,7 @@ app.delete('/api/v1/students/:id.json', function(req, res) {
 // - GET
 app.get('/api/v1/students.json', function(req, res) {
     let ids = [];
-    connection.query('SELECT id FROM s_info WHERE active = ?', [],function (error, results, fields) {
+    connection.query('SELECT id FROM s_info WHERE active = true', [],function (error, results, fields) {
 
         if (error) {
             console.log("Error: " + error);
@@ -145,7 +146,7 @@ app.get('/api/v1/students.json', function(req, res) {
 
 //====================== STATIC FILES =======================
 app.use(express.static(WEB)); //Website Files
-app.use('/api/student-images', express.static('student-images')); //Student images
+app.use('/student-images', express.static('student-images')); //Student images
 app.get('*', function (req, res) {
     res.status(404).sendFile(WEB + '/404Error.html');
 });
@@ -153,10 +154,9 @@ app.get('*', function (req, res) {
 
 //====================== START SERVER =======================
 
-let portNum = 8080
+let portNum = 3000
 let server = app.listen(portNum, process.env.IP, function(){
     console.log("Server Running on " + portNum);
-
 });
 
 

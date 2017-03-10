@@ -11,22 +11,22 @@ describe("getYearInSchool(grade)", function() { //suite
     });
 
     // Freshman
-    it("should return 'Freshman' for year 1", function() {
+    it("should return 'Freshman' for s_year 1", function() {
         expect(getYearInSchool(1)).toBe("Freshman");
     });
 
     // Sophmore
-    it("should return 'Sophmore' for year 2", function() {
+    it("should return 'Sophmore' for s_year 2", function() {
         expect(getYearInSchool(2)).toBe("Sophmore");
     });
 
     // Junior
-    it("should return 'Junior' for year 3", function() {
+    it("should return 'Junior' for s_year 3", function() {
         expect(getYearInSchool(3)).toBe("Junior");
     });
 
     // Senior
-    it("should return 'Senior' for year 4", function() {
+    it("should return 'Senior' for s_year 4", function() {
         expect(getYearInSchool(4)).toBe("Senior");
     });
 
