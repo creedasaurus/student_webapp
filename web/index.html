@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Student Data Viewer - Creed Haymond</title>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" sizes="16x16">
-    <link rel="stylesheet" href="/lib/css/bootswatch-bootstrap-3.3.6.min.css">
-    <link rel="stylesheet" href="/studentData.css">
+    <link rel="stylesheet" href="lib/css/bootswatch-bootstrap-3.3.6.min.css">
+    <link rel="stylesheet" href="studentData.css">
 </head>
 
 <body>
@@ -73,7 +73,7 @@
             <thead class="thead-color">
                 <tr>
                     <th id="lname" class="orderTable">Full Name <span class="glyphicon glyphicon-menu-right"></span></th>
-                    <th id="year" class="orderTable">Grade <span class="glyphicon glyphicon-menu-right"></span></th>
+                    <th id="s_year" class="orderTable">Grade <span class="glyphicon glyphicon-menu-right"></span></th>
                     <th id="startDate" class="orderTable hidden-xs">Start Date <span class="glyphicon glyphicon-menu-right"></span></th>
                     <th id="city" class="orderTable hidden-md hidden-sm hidden-xs">City <span class="glyphicon glyphicon-menu-right"></span></th>
                     <th id="state" class="orderTable hidden-sm hidden-xs">State <span class="glyphicon glyphicon-menu-right"></span></th>
@@ -86,7 +86,7 @@
                 <!-- data is dynamically created in a script -->
                 <!--<tr id="${index}" class="clickRow">-->
                 <!--    <td> ${student.lname}, ${student.fname} </td>-->
-                <!--    <td> ${getYearInSchool(student.year)} </td>-->
+                <!--    <td> ${getYearInSchool(student.s_year)} </td>-->
                 <!--    <td class="hidden-xs"> ${student.startDate} </td>-->
                 <!--    <td class="hidden-md hidden-sm hidden-xs"> ${student.city} </td>-->
                 <!--    <td class="hidden-sm hidden-xs"> ${student.state} </td>-->
@@ -380,7 +380,7 @@
             <!--                <div id="studentModalDataFrame">-->
             <!--                    <div class="studentModalData">-->
             <!--                        <img id="modalPicture" src="https://preview.c9users.io/creedhaymond/web2-uvu/students/server/student-images/${students[studentIndex].lname}-${students[studentIndex].fname}.png" class="studentPicture">-->
-            <!--                        <p><b>Year: </b>${getYearInSchool(students[studentIndex].year)}</p>-->
+            <!--                        <p><b>Year: </b>${getYearInSchool(students[studentIndex].s_year)}</p>-->
             <!--                        <p><b>Start Date: </b>${students[studentIndex].startDate}</p>-->
             <!--                        <p><b>Phone: </b>${students[studentIndex].phone}</p>-->
             <!--                        <p><b>Address: </b><br/>${students[studentIndex].street}<br/>${students[studentIndex].city}, ${students[studentIndex].state} ${students[studentIndex].zip}</p>-->

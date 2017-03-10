@@ -1,0 +1,34 @@
+{
+  "name": "student_webapp",
+  "version": "2.0.0",
+  "description": "Runs a student inventory web application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Creed Haymond",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "mysql2": "^1.1.2",
+    "serve-favicon": "^2.3.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creedasaurus/student_webapp.git"
+  },
+  "keywords": [
+    "angularjs",
+    "nodejs",
+    "bootstrap"
+  ],
+  "bugs": {
+    "url": "https://github.com/creedasaurus/student_webapp/issues"
+  },
+  "homepage": "https://github.com/creedasaurus/student_webapp#readme"
+}

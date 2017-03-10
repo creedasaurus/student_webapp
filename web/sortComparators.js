@@ -4,7 +4,7 @@ let sortFunctions = {
     'city'     : compareTwoStrings,
     'state'    : compareTwoStrings,
     'zip'      : compareNumbers,
-    'year'     : compareNumbers,
+    's_year'   : compareNumbers
 }
 
 function sortStudentData(studentArrObj, sortBy) {
@@ -15,7 +15,7 @@ function sortStudentData(studentArrObj, sortBy) {
             return studentNameSort(sortItemA, sortItemB, sortBy);
         }
 
-        // Pick the propper compare function based on sortBy key
+        // Pick the proper compare function based on sortBy key
         return sortFunctions[sortBy](sortItemA[sortBy], sortItemB[sortBy]);
     });
 }

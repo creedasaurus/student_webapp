@@ -1,4 +1,4 @@
 .idea/workspace.xml
-*/node_modules/*
 node_modules
+pswd.json
 .DS_Store
