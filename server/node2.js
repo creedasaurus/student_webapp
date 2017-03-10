@@ -5,19 +5,19 @@ const PUB = __dirname.replace('server', 'public');
 // __dirname === /home/ubuntu/workspace/students/server
 
 //===================== Get Primary Modules =======================
-var express = require('express');
-var fs = require('fs');
+let express = require('express');
+let fs = require('fs');
 
 //===================== Get Middleware Modules =======================
-var logger = require('morgan');
-var compression = require('compression');
-var favicon = require('serve-favicon');
-var bodyParser = require('body-parser');
+let logger = require('morgan');
+let compression = require('compression');
+let favicon = require('serve-favicon');
+let bodyParser = require('body-parser');
 
 
 
 //====================== Create EXPRESS App =======================
-var app = express();
+let app = express();
 app.disable('x-powered-by');
 
 // insert middleware
@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 
 //======================= FILE LIST DATA =======================
 console.log("Checking File System");
-var jsonFileList = fs.readdirSync(__dirname + '/students').map(fileName => fileName.replace('.json', ''));
+let jsonFileList = fs.readdirSync(__dirname + '/students').map(fileName => fileName.replace('.json', ''));
 
 
 
@@ -43,7 +43,7 @@ const ID_LENGTH = 4;
 // ~~ leadingZeros
 // helps make ID's formated properly
 function leadingZeros(number, spaces) {
-    var id = `${number}`;
+    let id = `${number}`;
     while (id.length < spaces) {
         id = '0' + id;
     }
@@ -54,15 +54,15 @@ function leadingZeros(number, spaces) {
 // generator function that continues to generate ID's
 function* createID() {
     // gets the largest student number from the file-list
-    var startingID = Math.max.apply(null, jsonFileList.map(fileName => parseInt(fileName)));
+    let startingID = Math.max.apply(null, jsonFileList.map(fileName => parseInt(fileName)));
     startingID++;
     while (true) {
-        var newID = leadingZeros(startingID++, ID_LENGTH);
+        let newID = leadingZeros(startingID++, ID_LENGTH);
         jsonFileList.push(newID);
         yield newID;
     }
 }
-var getID = createID();
+let getID = createID();
 
 
 
@@ -72,8 +72,8 @@ var getID = createID();
 // CREATE
 // - POST
 app.post('/api/v1/students', function(req, res) {
-    var student = JSON.stringify(req.body, null, '\t');
-    var stuID = getID.next().value;
+    let student = JSON.stringify(req.body, null, '\t');
+    let stuID = getID.next().value;
     
     fs.writeFile(`${__dirname}/students/${stuID}.json`, student, 'utf8');
     
@@ -85,8 +85,8 @@ app.post('/api/v1/students', function(req, res) {
 // READ
 // - GET :: just one student (specified in URL)
 app.get('/api/v1/students/:id.json', function(req, res) {
-    var id = req.params.id;
-    var fileReceived;
+    let id = req.params.id;
+    let fileReceived;
     fs.readFile(`${__dirname}/students/${id}.json`, 'utf8', function(err, file) {
         if (err) console.log("Resource not there");
         
@@ -99,8 +99,8 @@ app.get('/api/v1/students/:id.json', function(req, res) {
 // UPDATE
 // PUT a student (specified and given data);
 app.put('/api/v1/students/:id.json', function(req, res) {
-    var id = req.params.id;
-    var updatedStudent = JSON.stringify(req.body, null, '\t');
+    let id = req.params.id;
+    let updatedStudent = JSON.stringify(req.body, null, '\t');
 
     fs.writeFile(`${__dirname}/students/${id}.json`, updatedStudent, 'utf8', function(err){
         if (err) console.log(err);
@@ -115,8 +115,8 @@ app.put('/api/v1/students/:id.json', function(req, res) {
 // DELETE
 // - DELETE
 app.delete('/api/v1/students/:id.json', function(req, res) {
-    var id = req.params.id;
-    var indexOfID = jsonFileList.indexOf(id);
+    let id = req.params.id;
+    let indexOfID = jsonFileList.indexOf(id);
 
     // If index doesn't exist send 404
     if (indexOfID === -1) {
@@ -156,8 +156,8 @@ app.get('*', function(req, res) {
 
 //====================== START SERVER =======================
 
-var portNum = 8080
-var server = app.listen(portNum, process.env.IP, function(){
+let portNum = 8080
+let server = app.listen(portNum, process.env.IP, function(){
     console.log("Server Running on " + portNum);
 
 });
