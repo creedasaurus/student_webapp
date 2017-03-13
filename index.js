@@ -1,7 +1,5 @@
 console.log('Loading Server');
 const WEB = __dirname + '/web';
-// const SERV = __dirname + '/server';
-
 
 //===================== Get Primary Modules =======================
 let express = require('express');

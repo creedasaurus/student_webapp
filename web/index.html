@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="studentDataApp">
 
 <head>
     <meta charset="UTF-8">
@@ -60,16 +60,14 @@
         <!-- /.container-fluid -->
     </nav>
     
-    
-    
-    
+
 
 <!--================= DIFFERENT VIEWS ====================-->
 <!--======================================================-->
 
     <!-------- Table View for Student Data -------->
     <div id="table-view" class="main-view table-responsive">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover" ng-controller="StuDataController as StuCntrl">
             <thead class="thead-color">
                 <tr>
                     <th id="lname" class="orderTable">Full Name <span class="glyphicon glyphicon-menu-right"></span></th>
@@ -84,20 +82,20 @@
             </thead>
             <tbody id="studentDataTable">
                 <!-- data is dynamically created in a script -->
-                <!--<tr id="${index}" class="clickRow">-->
-                <!--    <td> ${student.lname}, ${student.fname} </td>-->
-                <!--    <td> ${getYearInSchool(student.s_year)} </td>-->
-                <!--    <td class="hidden-xs"> ${student.startDate} </td>-->
-                <!--    <td class="hidden-md hidden-sm hidden-xs"> ${student.city} </td>-->
-                <!--    <td class="hidden-sm hidden-xs"> ${student.state} </td>-->
-                <!--    <td class="hidden-md hidden-sm hidden-xs"> ${student.zip} </td>-->
-                <!--    <td class="editCol text-center" title="Edit">-->
-                <!--        <div class="glyphicon glyphicon-pencil editItemButton"></div>-->
-                <!--    </td>-->
-                <!--    <td class="deleteCol text-center" title="Delete">-->
-                <!--        <div class="glyphicon glyphicon-remove deleteItemButton"></div>-->
-                <!--    </td>-->
-                <!--</tr>-->
+                <tr ng-repeat="student in students"  id="${index}" class="clickRow">
+                    <td> {{student.lname}}, {{student.fname}}</td>
+                    <td> {{student.s_year}}</td>
+                    <td class="hidden-xs"> {{student.startDate}} </td>
+                    <td class="hidden-md hidden-sm hidden-xs"> {{student.city}}</td>
+                    <td class="hidden-sm hidden-xs"> {{student.state}} </td>
+                    <td class="hidden-md hidden-sm hidden-xs"> {{student.zip}} </td>
+                    <td class="editCol text-center" title="Edit">
+                        <div class="glyphicon glyphicon-pencil editItemButton"></div>
+                    </td>
+                    <td class="deleteCol text-center" title="Delete">
+                        <div class="glyphicon glyphicon-remove deleteItemButton"></div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -417,12 +415,13 @@
 
 
 </div>
-
+<script src="lib/js/angular.js"></script>
 <script src="lib/js/jquery-2.2.4.min.js"></script>
 <script src="lib/js/bootstrap-3.3.6.min.js"></script>
 <script src="lib/js/js.cookie-2.1.2.js"></script>
-<script src="interface.js"></script>
-<script src="sortComparators.js"></script>
+<script src="student_logic.js"></script>
+<!--<script src="interface.js"></script>-->
+<!--<script src="sortComparators.js"></script>-->
 
 </body>
 
