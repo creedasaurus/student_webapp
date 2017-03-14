@@ -13,20 +13,20 @@ let compression = require('compression');
 let favicon = require('serve-favicon');
 let bodyParser = require('body-parser');
 let mysql = require('mysql2');
-let pswds = require('./pswd');
-
-
 //====================== Create EXPRESS App =======================
 let app = express();
 
+
 app.disable('x-powered-by');
+
 // insert middleware
 app.use(logger('dev'));
 app.use(compression());
 app.use(favicon(WEB + '/img/favicon.ico'));
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({ extended: true}));
+
+let pswds = require('./pswd');
 
 let connection = mysql.createConnection({
     host: 'localhost',
@@ -35,6 +35,7 @@ let connection = mysql.createConnection({
     database: 'students',
     dateStrings: 'true'
 });
+
 
 connection.connect(function(err) {
     if (err) {
