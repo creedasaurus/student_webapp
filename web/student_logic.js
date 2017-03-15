@@ -31,6 +31,14 @@ angular.module('studentDataApp', [])
             }
         ];
 
+        $scope.popStudentModal = (stu)=>{
+            console.log(stu);
+            $scope.selectedStudent = stu;
+        };
+
+        $scope.editButton = ()=> {
+            console.log("editButton clicked")
+        };
 
 
     });
