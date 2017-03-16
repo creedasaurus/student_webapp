@@ -2,43 +2,63 @@
  * Created by creed on 3/10/2017.
  */
 
-angular.module('studentDataApp', [])
-    .controller('StuDataController', ($scope)=>{
-        $scope.students = [
-            {
-                "fname": "Lois",
-                "lname": "Hanson",
-                "startDate": "3/12/93",
-                "street": "923 North 1400 East",
-                "city": "Williamsburg",
-                "state": "ID",
-                "zip": 93673,
-                "phone": "673-3114",
-                "s_year": 4,
-                "id": "0001"
-            },
-            {
-                "fname": "Alex",
-                "lname": "Peterson",
-                "startDate": "7/11/94",
-                "street": "931 South 300 West",
-                "city": "Williamsburg",
-                "state": "ID",
-                "zip": 93673,
-                "phone": "679-2116",
-                "s_year": 3,
-                "id": "0002"
+let myapp = angular.module('studentDataApp', []);
+
+myapp.service('classroomSrvc', ['$http', '$q',function ($http, $q) {
+    let _students = [];
+    let _manifest = [];
+    let _getStudentCalls = [];
+    this.selectedStu = {};
+
+    $http.get('/api/v1/students.json')
+        .then(function(res) {
+            // For now just get the entire student list. We will learn to paginate with it.
+            // TODO: learn to do server-side paging with MySQL
+            for (stu in res.data) {
+                _manifest.push(res.data[stu]);
+                _getStudentCalls.push($http.get(`/api/v1/students/${res.data[stu]}.json`)
+                    .then(function(res) {
+                        // console.log(res);
+                        _students.push(res.data);
+                    }
+                ));
             }
-        ];
-
-        $scope.popStudentModal = (stu)=>{
-            console.log(stu);
-            $scope.selectedStudent = stu;
-        };
-
-        $scope.editButton = ()=> {
-            console.log("editButton clicked")
-        };
+        });
 
 
-    });
+
+    //---- AVAILABLE FUNCTIONS AND DATA ----//
+    this.setSelectedStu = function(stu) {
+        console.log("setting student");
+        _selectedStu = stu;
+    };
+    // this.getSelectedStu = function() {
+    //     console.log("getting student");
+    //     return _students[4];
+    // };
+
+
+    this.getAll = function () {
+        console.log(_manifest);
+        return _students;
+    };
+}]);
+
+
+myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($scope, classroomSrvc) {
+
+    $scope.students = classroomSrvc.getAll();
+
+
+    $scope.popStudentModal = function(stu) {
+        classroomSrvc.setSelectedStu(stu);
+    };
+
+    $scope.editButton = () => {
+        console.log("editButton clicked")
+    };
+}]);
+
+myapp.controller('StudentModalController', ['$scope', 'classroomSrvc', function($scope, classroomSrvc) {
+    $scope.selectedStu = classroomSrvc.selectedStu;
+}]);

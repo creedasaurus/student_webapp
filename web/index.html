@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="studentData.css">
 </head>
 
-<body  ng-controller="StuDataController as StuCntrl">
+<body >
 <div class="container">
     
     <div class="jumbotron text-center">
@@ -66,7 +66,7 @@
 <!--======================================================-->
 
     <!-------- Table View for Student Data -------->
-    <div id="table-view" class="main-view table-responsive">
+    <div id="table-view" class="main-view table-responsive" ng-controller="DataTableController as StuCntrl" ng-cloak>
         <table class="table table-bordered table-hover">
             <thead class="thead-color">
                 <tr>
@@ -292,7 +292,7 @@
                     <h2 class="modal-title text-center">Restore Deleted Students</h2>
                 </div>
                 <div class="modal-body">
-                    <div id="table-view" class="main-view table-responsive">
+                    <div id="restore-table-view" class="main-view table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead class="thead-color">
                                 <tr>
@@ -332,7 +332,7 @@
                     <h2 class="modal-title text-center">Confirm Delete</h2>
                 </div>
                 <div class="modal-body">
-                    <div id="table-view" class="main-view table-responsive">
+                    <div id="delete-table-view" class="main-view table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead class="thead-color">
                                 <tr>
@@ -364,7 +364,7 @@
 
 
     <!-------- Modal Student View for Displaying Student Data  -------->
-    <div class="modal fade" id="studentModal" role="dialog">
+    <div class="modal fade" id="studentModal" role="dialog" ng-controller="StudentModalController as StuModalCtrl">
         <div id="showStudentModal" class="modal-dialog">
             <!-- data is dynamically created in a script -->
 
