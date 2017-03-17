@@ -4,70 +4,111 @@
 
 let myapp = angular.module('studentDataApp', []);
 
-myapp.service('classroomSrvc', ['$http', '$q',function ($http, $q) {
-    let _students = [];
-    let _manifest = [];
-    let _getStudentCalls = [];
-    let selectedStu = {};
-    //
+myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
+
+    let students = [];
+    let manifest = [];
+    let getStudentCalls = [];
+    let selectedStudent = {};
+
     $http.get('/api/v1/students.json')
-        .then(function(res) {
+        .then(function (res) {
             console.log(res.data);
             // For now just get the entire student list. We will learn to paginate with it.
             // TODO: learn to do server-side paging with MySQL
-            for (stu in res.data) {
-                _manifest.push(res.data[stu]);
-                _getStudentCalls.push($http.get(`/api/v1/students/${res.data[stu]}.json`)
-                    .then(function(res) {
-                        // console.log(res);
-                        _students.push(res.data);
-                    }
-                ));
+            for (let stu in res.data) {
+
+                manifest.push(res.data[stu]);
+
+                getStudentCalls.push($http.get(`/api/v1/students/${res.data[stu]}.json`)
+                    .then(function (res) {
+                            students.push(res.data);
+                        }
+                    ));
             }
         });
 
 
-
-    //---- AVAILABLE FUNCTIONS AND DATA ----//
-    this.setSelectedStu = function(stu) {
-        console.log("setting student");
-        _selectedStu = stu;
-        console.log(_selectedStu);
-    };
-    this.getSelectedStu = function() {
-        console.log("getting student");
-        return _students[4];
+    let getSelectedStu = function () {
+        return selectedStudent;
     };
 
+    let selectStudent = function (stu) {
+        angular.copy(stu, selectedStudent);
+    };
 
-    this.getAll = function () {
-        console.log(_manifest);
-        return _students;
+    let getAll = function () {
+        console.log(manifest);
+        return students;
+    };
+
+    let addStudent = function (stu) {
+        console.log("adding student");
+        // TODO: add an http POST request to add a new student
+        let newID = manifest[manifest.length - 1];
+        console.log(newID);
+        stu.id = newID;
+        students.push(stu);
+        console.log(students);
+    };
+
+    let editStudent = function (stu) {
+        console.log(stu);
+    };
+
+    let deleteStudent = function (stu) {
+        console.log("deleting student");
+
+    };
+
+    return {
+        getSelected: getSelectedStu,
+        selectStudent: selectStudent,
+        getAll: getAll,
+        addStudent: addStudent,
+        editStudent: editStudent
     };
 }]);
-
 
 myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($scope, classroomSrvc) {
 
     $scope.students = classroomSrvc.getAll();
+    $scope.selectedStudent = classroomSrvc.getSelected();
 
-
-    $scope.popStudentModal = function(stu) {
-        $scope.selectedStu = stu;
+    $scope.selectStu = function (stu) {
+        classroomSrvc.selectStudent(stu);
     };
 
-    $scope.editButton = () => {
-        console.log("editButton clicked")
-    };
 }]);
 
-// myapp.controller('StudentModalController', ['$scope', 'classroomSrvc', function($scope, classroomSrvc) {
-//     $scope.selectedStudent = classroomSrvc.getSelectedStu();
-// }]);
+myapp.controller('EditStudentController', ['$scope', 'classroomSrvc', function ($scope, classroomSrvc) {
+    $scope.student = classroomSrvc.getSelected();
+    $scope.states = statesOptions;
 
-myapp.directive('studentInfoModal', function() {
+    $scope.addStudent = function () {
+        $scope.student = {};
+        $scope.saveStudent = function () {
+            classroomSrvc.addStudent($scope.student);
+        };
+    };
+
+    $scope.editStudent = function () {
+        $scope.saveStudent = function () {
+            classroomSrvc.editStudent($scope.student);
+        };
+    };
+
+}]);
+
+myapp.controller('DeleteStudentController', ['$scope', function ($scope) {
+
+}]);
+
+
+myapp.directive('studentInfoModal', function () {
     return {
         restrict: 'E',
         templateUrl: 'stu-modal.html'
     };
 });
+
