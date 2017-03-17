@@ -22,6 +22,7 @@
 
     <!--================= STUDENT DATA NAVBAR ================-->
     <!--======================================================-->
+
     <nav class="navbar navbar-inverse" ng-controller="EditStudentController as navBarCntrl">
         <div class="container-fluid">
 
@@ -65,8 +66,9 @@
     <!--================= DIFFERENT VIEWS ====================-->
     <!--======================================================-->
 
+<div ng-switch="currView" ng-controller="DataTableController as StuCntrl">
     <!-------- Table View for Student Data -------->
-    <div ng-controller="DataTableController as StuCntrl" ng-cloak>
+    <div ng-switch-when="table" ng-cloak>
         <div id="table-view" class="main-view table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="thead-color">
@@ -128,21 +130,21 @@
 
 
     <!-------- Tile View for Student Data :: hidden by default -------->
-    <div id="tile-view" class="main-view">
+    <div id="tile-view" class="main-view" ng-switch-when="tiles">
         <br>
         <div id="studentDataTiles" class="row">
             <!-- data is dynamically created in a script -->
-
-            <!--<div id="${student.lname}${index}" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">-->
-            <!--    <div class="panel panel-info clickPanel">-->
-            <!--        <div  class="panel-heading ">-->
-            <!--            <h3 class="panel-title"> ${student.lname}, ${student.fname} </h3>-->
-            <!--        </div>-->
-            <!--        <div class="panel-body text-center"><img src="https://preview.c9users.io/creedhaymond/web2-uvu/students/server/student-images/${student.lname}-${student.fname}.png" class="studentPicture"></div>-->
-            <!--    </div>-->
-            <!--</div>-->
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="">
+                <div class="panel panel-info clickPanel">
+                    <div  class="panel-heading ">
+                        <h3 class="panel-title"> {{student.lname}}, {{student.fname}} </h3>
+                    </div>
+                    <div class="panel-body text-center"><img src="/student-images/${student.lname}-${student.fname}.png" class="studentPicture"></div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
 
 

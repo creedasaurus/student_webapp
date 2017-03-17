@@ -8,6 +8,7 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
 
     let students = [];
     let manifest = [];
+    let toDelete = [];
     let getStudentCalls = [];
     let selectedStudent = {};
 
@@ -43,8 +44,9 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
     };
 
     let addStudent = function (stu) {
-        console.log("adding student");
         // TODO: add an http POST request to add a new student
+
+        console.log("adding student");
         let newID = manifest[manifest.length - 1];
         console.log(newID);
         stu.id = newID;
@@ -53,12 +55,15 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
     };
 
     let editStudent = function (stu) {
+        // TODO: edit students
+
         console.log(stu);
     };
 
     let deleteStudent = function (stu) {
-        console.log("deleting student");
+        // TODO: figure out how to delete students
 
+        console.log("deleting student");
     };
 
     return {
@@ -69,6 +74,8 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
         editStudent: editStudent
     };
 }]);
+
+
 
 myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($scope, classroomSrvc) {
 
@@ -81,15 +88,16 @@ myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($s
 
 }]);
 
+
 myapp.controller('EditStudentController', ['$scope', 'classroomSrvc', function ($scope, classroomSrvc) {
     $scope.student = classroomSrvc.getSelected();
     $scope.states = statesOptions;
+    $scope.saveStudent = function () {};
+    $scope.currView = "table";
+
 
     $scope.addStudent = function () {
-        $scope.student = {};
-        $scope.saveStudent = function () {
-            classroomSrvc.addStudent($scope.student);
-        };
+
     };
 
     $scope.editStudent = function () {
@@ -97,12 +105,14 @@ myapp.controller('EditStudentController', ['$scope', 'classroomSrvc', function (
             classroomSrvc.editStudent($scope.student);
         };
     };
-
 }]);
+
+
 
 myapp.controller('DeleteStudentController', ['$scope', function ($scope) {
 
 }]);
+
 
 
 myapp.directive('studentInfoModal', function () {
