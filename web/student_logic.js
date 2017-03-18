@@ -54,16 +54,16 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
         console.log(students);
     };
 
-    let editStudent = function (stu) {
+    let editStudent = function () {
         // TODO: edit students
 
-        console.log(stu);
+        console.log(selectedStudent.fname);
     };
 
     let deleteStudent = function (stu) {
         // TODO: figure out how to delete students
 
-        console.log("deleting student");
+        console.log(selectedStudent);
     };
 
     return {
@@ -81,38 +81,31 @@ myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($s
 
     $scope.students = classroomSrvc.getAll();
     $scope.selectedStudent = classroomSrvc.getSelected();
+    $scope.states = statesOptions;
+    $scope.currView = "table";
+    $scope.saveStudent = function() {
+        console.log('ill save it');
+    };
 
     $scope.selectStu = function (stu) {
         classroomSrvc.selectStudent(stu);
     };
 
-}]);
-
-
-myapp.controller('EditStudentController', ['$scope', 'classroomSrvc', function ($scope, classroomSrvc) {
-    $scope.student = classroomSrvc.getSelected();
-    $scope.states = statesOptions;
-    $scope.saveStudent = function () {};
-    $scope.currView = "table";
-
-
     $scope.addStudent = function () {
-
-    };
-
-    $scope.editStudent = function () {
-        $scope.saveStudent = function () {
-            classroomSrvc.editStudent($scope.student);
+        $scope.selectedStudent = {};
+        $scope.saveStudent = function() {
+            classroomSrvc.addStudent();
         };
     };
+
+    $scope.editStu = function () {
+        console.log("edit stud clicked");
+        $scope.saveStudent = function() {
+            classroomSrvc.editStudent();
+        };
+    };
+
 }]);
-
-
-
-myapp.controller('DeleteStudentController', ['$scope', function ($scope) {
-
-}]);
-
 
 
 myapp.directive('studentInfoModal', function () {
@@ -122,3 +115,9 @@ myapp.directive('studentInfoModal', function () {
     };
 });
 
+myapp.directive('studentFormModal', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'stu-form.html'
+    }
+});

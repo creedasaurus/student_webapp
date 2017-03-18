@@ -112,9 +112,6 @@ th > span {
 /*-- 2. Tile View    -----------------------------*/
 /*================================================*/
 
-#tile-view {
-    display: none;
-}
 
 .studentPicture {
     width: 100px;

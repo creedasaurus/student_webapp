@@ -32,8 +32,10 @@ app.get('*', function (req, res) {
 //====================== START SERVER =======================
 
 let portNum = 3000
-let server = app.listen(portNum, process.env.IP, function(){
+let IP = 'localhost'
+let server = app.listen(portNum, IP, function(){
     console.log("Server Running on " + portNum);
+    console.log(`http://${IP}:${portNum}`)
 });
 
 

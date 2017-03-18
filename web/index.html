@@ -11,64 +11,59 @@
     <script src="lib/js/angular.js"></script>
 </head>
 
-<body>
+<body ng-controller="DataTableController as StuCntrl" ng-cloak>
 <div class="container">
 
-    <div class="jumbotron text-center">
-        <h1>Student Data Viewer</h1>
-        <p>Data populated from a JSON retrieved by an AJAX call</p>
-    </div>
+<div class="jumbotron text-center">
+    <h1>Student Data Viewer</h1>
+    <p>Data populated from a MySQL database</p>
+    <h5>this is some dffdfsdfssdfsddfsdf info</h5>
+</div>
 
 
-    <!--================= STUDENT DATA NAVBAR ================-->
-    <!--======================================================-->
+<!--================= STUDENT DATA NAVBAR ================-->
+<!--======================================================-->
 
-    <nav class="navbar navbar-inverse" ng-controller="EditStudentController as navBarCntrl">
-        <div class="container-fluid">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
 
-            <!-- Navbar Collapsable (for mobile view) -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#navbarCollapse1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand"><img src="img/school.svg" width=25px></a>
-            </div>
-
-            <!-- Navbar Links and Such -->
-            <div class="collapse navbar-collapse" id="navbarCollapse1">
-
-                <!-- Left Side -->
-                <ul class="nav navbar-nav">
-                    <li id="addStudentBut" data-toggle="modal" data-target="#studentFormModal" ng-click="addStudent()"><a>Add Student <span class="sr-only">(current)</span></a></li>
-                    <li id="restoreStudentBut"><a>Restore Student</a></li>
-                    <!--<li id="clearCookies"><a>Clear Cookies</a></li>-->
-                </ul>
-
-                <!--Right Side-->
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a id="viewButton" data-toggle="tooltip" data-placement="top" title="Tile View">
-                            <span id="viewIcon" class="glyphicon glyphicon-th"></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+        <!-- Navbar Collapsable (for mobile view) -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbarCollapse1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"><img src="img/school.svg" width=25px></a>
         </div>
-        <!-- /.container-fluid -->
-    </nav>
+
+        <!-- Navbar Links and Such -->
+        <div class="collapse navbar-collapse" id="navbarCollapse1">
+            <!-- Left Side -->
+            <ul class="nav navbar-nav">
+                <li id="addStudentBut" data-toggle="modal" data-target="#studentFormModal" ng-click="addStudent()"><a>Add Student <span class="sr-only">(current)</span></a></li>
+                <li id="restoreStudentBut"><a>Restore Student</a></li>
+            </ul>
+            <!--Right Side-->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a id="viewButton" data-toggle="tooltip" data-placement="top" title="Tile View" ng-click="currView==='table' ? currView='tiles': currView='table'">
+                        <span id="viewIcon" class="glyphicon glyphicon-th"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 
-    <!--================= DIFFERENT VIEWS ====================-->
-    <!--======================================================-->
-
-<div ng-switch="currView" ng-controller="DataTableController as StuCntrl">
+<!--================= DIFFERENT VIEWS ====================-->
+<!--======================================================-->
+<div ng-switch="currView" >
     <!-------- Table View for Student Data -------->
-    <div ng-switch-when="table" ng-cloak>
+    <div ng-switch-when="table">
         <div id="table-view" class="main-view table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="thead-color">
@@ -109,7 +104,7 @@
                     <td data-toggle="modal" data-target="#studentModal"
                         class="hidden-md hidden-sm hidden-xs"> {{student.zip}}
                     </td>
-                    <td data-toggle="modal" data-target="#studentFormModal" class="editCol text-center" title="Edit" ng-click="editStudent()">
+                    <td data-toggle="modal" data-target="#studentFormModal" class="editCol text-center" title="Edit" ng-click="editStu()">
                         <div class="glyphicon glyphicon-pencil editItemButton"></div>
                     </td>
                     <td data-toggle="modal" data-target="#confirmDelModal" class="deleteCol text-center" title="Delete">
@@ -120,26 +115,26 @@
             </table>
 
         </div>
-        <!-------- Modal Student View for Displaying Student Data  -------->
-        <div class="modal fade" id="studentModal" role="dialog">
-            <div id="showStudentModal" class="modal-dialog">
-                <student-info-modal></student-info-modal>
-            </div>
+    </div>
+
+    <!-------- Modal Student View for Displaying Student Data  -------->
+    <div class="modal fade" id="studentModal" role="dialog">
+        <div id="showStudentModal" class="modal-dialog">
+            <student-info-modal></student-info-modal>
         </div>
     </div>
 
-
     <!-------- Tile View for Student Data :: hidden by default -------->
     <div id="tile-view" class="main-view" ng-switch-when="tiles">
-        <br>
+
         <div id="studentDataTiles" class="row">
             <!-- data is dynamically created in a script -->
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="">
-                <div class="panel panel-info clickPanel">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="student in students">
+                <div class="panel panel-info clickPanel" data-toggle="modal" data-target="#studentModal" ng-click="selectStu(student)">
                     <div  class="panel-heading ">
                         <h3 class="panel-title"> {{student.lname}}, {{student.fname}} </h3>
                     </div>
-                    <div class="panel-body text-center"><img src="/student-images/${student.lname}-${student.fname}.png" class="studentPicture"></div>
+                    <div class="panel-body text-center"><img src="/student-images/{{student.lname}}-{{student.fname}}.png" class="studentPicture"></div>
                 </div>
             </div>
         </div>
@@ -149,7 +144,7 @@
 
 
 
-<div class="modal fade" id="studentFormModal" role="dialog" ng-controller="EditStudentController as EditControl" ng-cloak>
+<div class="modal fade" id="studentFormModal" role="dialog">
 <div class="modal-dialog">
     <div class="modal-content">
         <!--modal header-->
@@ -158,104 +153,7 @@
             <h2 class="modal-title text-center">Enter Student Information</h2>
         </div>
         <!--modal body-->
-        <div class="modal-body">
-            <form id="studentForm" class="form-horizontal">
-                <fieldset>
-                    <legend class="text-center">Personal Information</legend>
-                    <!--First Name Field -->
-                    <div class="form-group">
-                        <label for="inputFirstName" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">First Name</label>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
-                            <input type="text" class="form-control" id="inputFirstName"
-                                   placeholder="First Name" ng-model="student.fname">
-                        </div>
-                    </div>
-                    <!--Last Name Field -->
-                    <div class="form-group">
-                        <label for="inputLastName" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Last
-                            Name</label>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
-                            <input type="text" class="form-control" id="inputLastName"
-                                   placeholder="Last Name" ng-model="student.lname">
-                        </div>
-                    </div>
-                    <!-- Phone Number Field -->
-                    <div class="form-group">
-                        <label for="inputPhone" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Phone
-                            Number</label>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                            <input type="text" class="form-control" id="inputPhone"
-                                   placeholder="000-000-0000" ng-model="student.phone">
-                        </div>
-                    </div>
-                    <!-- Start Date Field -->
-                    <div class="form-group">
-                        <label for="inputStartDate" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Start
-                            Date</label>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                            <input type="text" class="form-control" id="inputStartDate"
-                                   placeholder="yyyy-MM-dd" ng-model="student.startDate">
-                        </div>
-                    </div>
-
-                    <!-- Year Field -->
-                    <div class="form-group">
-                        <label for="yearInSchool" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Year
-                            in School</label>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                            <select class="form-control" id="yearInSchool"
-                                    ng-model="student.s_year" ng-options="year for year in [1,2,3,4]"></select>
-                        </div>
-                    </div>
-
-                    <legend class="text-center">Address</legend>
-                    <!-- Address Line Field -->
-                    <div class="form-group">
-                        <label for="inputAddressL1" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Address</label>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
-                            <input type="text" class="form-control" id="inputAddressL1"
-                                   placeholder="Street Address" ng-model="student.street" required>
-                        </div>
-                    </div>
-                    <!-- City Field -->
-                    <div class="form-group">
-                        <label for="inputCity"
-                               class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">City</label>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
-                            <input type="text" class="form-control" id="inputCity"
-                                   placeholder="City" ng-model="student.city" required>
-                        </div>
-                    </div>
-
-                    <!-- State Field -->
-                    <div class="form-group">
-                        <label for="inputState"
-                               class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">State</label>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                            <select class="form-control" id="inputState" name="state"
-                                    ng-model="student.state" ng-options="stateAbb as stateName for (stateAbb, stateName) in states"></select>
-                        </div>
-                    </div> <!-- State Selector -->
-
-                    <!-- Zip Field -->
-                    <div class="form-group">
-                        <label for="inputZip"
-                               class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Zip</label>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                            <input type="text" class="form-control" id="inputZip"
-                                   placeholder="ZIP" ng-model="student.zip">
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div id="saveButtonDiv" class="text-center">
-                        <input id="formSubmit" type="submit" class="btn btn-success" value="Save" ng-click="saveStudent()">
-                        <!--<button type="submit" form="studentForm" value="Submit">Submit</button>-->
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+        <student-form-modal></student-form-modal>
     </div>
 </div>
 </div>

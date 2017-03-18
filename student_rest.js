@@ -2,7 +2,6 @@
  * Created by creedh on 3/16/17.
  */
 
-
 let express = require('express');
 let bodyParser = require('body-parser');
 let mysql = require('mysql2');
