@@ -31,8 +31,8 @@ app.get('*', function (req, res) {
 
 //====================== START SERVER =======================
 
-let portNum = 3000
-let IP = 'localhost'
+let portNum = 3000;
+let IP = 'localhost';
 let server = app.listen(portNum, IP, function(){
     console.log("Server Running on " + portNum);
     console.log(`http://${IP}:${portNum}`)
@@ -61,6 +61,3 @@ process.on('SIGTERM', function() {
 process.on('SIGINT', function() {
     gracefullShutdown();
 })
-
-// SIGKILL (kill -9) can't be caught by any process, including node
-// SIGSTP/SIGCONT (stop/continue)

@@ -47,11 +47,12 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
         // TODO: add an http POST request to add a new student
 
         console.log("adding student");
-        let newID = manifest[manifest.length - 1];
+        let newID = manifest.length;
         console.log(newID);
         stu.id = newID;
         students.push(stu);
         console.log(students);
+        selectStudent(stu);
     };
 
     let editStudent = function () {
@@ -63,7 +64,7 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
     let deleteStudent = function (stu) {
         // TODO: figure out how to delete students
 
-        console.log(selectedStudent);
+        console.log(selectedStudent.fname);
     };
 
     return {
@@ -88,13 +89,15 @@ myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($s
     };
 
     $scope.selectStu = function (stu) {
+
         classroomSrvc.selectStudent(stu);
     };
 
     $scope.addStudent = function () {
         $scope.selectedStudent = {};
         $scope.saveStudent = function() {
-            classroomSrvc.addStudent();
+            classroomSrvc.addStudent($scope.selectedStudent);
+            $scope.selectedStudent = classroomSrvc.getSelected();
         };
     };
 
