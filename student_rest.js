@@ -16,7 +16,7 @@ let connection = mysql.createConnection({
     host: 'localhost',
     user: pswds.mysql.user,
     password: pswds.mysql.password,
-    database: 'students1',
+    database: 'students',
     dateStrings: 'true'
 });
 connection.connect(function (err) {
@@ -29,6 +29,9 @@ connection.connect(function (err) {
 
 let shutdownFunc = () => {
     connection.end(function (err) {
+        if (err) {
+            console.log('Error closing MySQL' + err.code.red);
+        }
         console.log('\nmysql closed');
     });
 };
@@ -72,34 +75,34 @@ router.get('/students/:id.json', function (req, res) {
 
 // UPDATE
 // PUT a student (specified and given data);
-router.put('/students/:id.json', function (req, res) {
-    let id = req.params.id;
-    let updatedStudent = JSON.stringify(req.body, null, '\t');
+// router.put('/students/:id.json', function (req, res) {
+//     let id = req.params.id;
+//     let updatedStudent = JSON.stringify(req.body, null, '\t');
 
-    fs.writeFile(`${__dirname}/students/${id}.json`, updatedStudent, 'utf8', function (err) {
-        if (err) console.log(err);
-        res.sendStatus(204);
-    });
+//     fs.writeFile(`${__dirname}/students/${id}.json`, updatedStudent, 'utf8', function (err) {
+//         if (err) console.log(err);
+//         res.sendStatus(204);
+//     });
 
-});
+// });
 
 
 // DELETE
 // - DELETE
-router.delete('/students/:id.json', function (req, res) {
-    let id = req.params.id;
-    // let indexOfID = jsonFileList.indexOf(id);
-    console.log(id);
+// router.delete('/students/:id.json', function (req, res) {
+//     let id = req.params.id;
+//     // let indexOfID = jsonFileList.indexOf(id);
+//     console.log(id);
 
-    connection.query('UPDATE s_info SET active=FALSE WHERE id=?', [id], function (err, rslts, flds) {
-        if (err) {
-            res.status(404).sendFile(WEB + '/404Error.html');
-        }
+//     connection.query('UPDATE s_info SET active=FALSE WHERE id=?', [id], function (err, rslts, flds) {
+//         if (err) {
+//             res.status(404).sendFile(WEB + '/404Error.html');
+//         }
 
-    }).on('end', function () {
-        res.sendStatus(204);
-    });
-});
+//     }).on('end', function () {
+//         res.sendStatus(204);
+//     });
+// });
 
 
 // LIST
