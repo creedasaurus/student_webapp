@@ -10,6 +10,8 @@ let logger = require('morgan');
 let compression = require('compression');
 let favicon = require('serve-favicon');
 let rest = require('./student_rest');
+let otherRest = require('./studentDBDao.js');
+let colors = require('colors');
 
 let app = express();
 
@@ -17,8 +19,7 @@ app.disable('x-powered-by');
 app.use(logger('dev'));
 app.use(compression());
 app.use(favicon(WEB + '/img/favicon.ico'));
-app.use('/api/v1', rest);
-
+app.use('/api/v1', rest.router);
 
 
 //====================== STATIC FILES =======================
@@ -33,11 +34,10 @@ app.get('*', function (req, res) {
 
 let portNum = 3000;
 let IP = 'localhost';
-let server = app.listen(portNum, IP, function(){
+let server = app.listen(portNum, IP, function () {
     console.log("Server Running on " + portNum);
-    console.log(`http://${IP}:${portNum}`)
+    console.log(`http://${IP}:${portNum}`.green.underline)
 });
-
 
 
 //====================== SHUTDOWN HANDLING =======================
@@ -45,19 +45,20 @@ function gracefullShutdown() {
     console.log('\nStarting Shutdown');
 
     console.log('\nClosing mysql connection');
-    connection.end(function (err) {
-        console.log('\nmysql closed');
-    });
+    rest.shutdownFunc();
 
-    server.close(function() {
+    server.close(function (err) {
+        if (err) {
+            console.log('Error closing: ' + err.code.red);
+        }
         console.log('\nShutdown Complete');
     });
 }
 
-process.on('SIGTERM', function() {
+process.on('SIGTERM', function () {
     gracefullShutdown();
 });
 
-process.on('SIGINT', function() {
+process.on('SIGINT', function () {
     gracefullShutdown();
 })

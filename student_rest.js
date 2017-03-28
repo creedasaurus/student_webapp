@@ -7,6 +7,7 @@ let bodyParser = require('body-parser');
 let mysql = require('mysql2');
 let pswds = require('./pswd');
 let router = express.Router();
+let colors = require('colors');
 
 router.use(bodyParser.json());
 
@@ -15,16 +16,22 @@ let connection = mysql.createConnection({
     host: 'localhost',
     user: pswds.mysql.user,
     password: pswds.mysql.password,
-    database: 'students',
+    database: 'students1',
     dateStrings: 'true'
 });
 connection.connect(function (err) {
     if (err) {
-        console.error('error connecting: ' + err.stack);
+        console.error('error connecting: ' + err.code.red);
         return;
     }
     console.log('connected as id ' + connection.threadId);
 });
+
+let shutdownFunc = () => {
+    connection.end(function (err) {
+        console.log('\nmysql closed');
+    });
+};
 
 
 //===================== REST API HANDLING =======================
@@ -115,4 +122,7 @@ router.get('/students.json', function (req, res) {
 });
 
 
-module.exports = router;
+module.exports = {
+    'router': router,
+    'shutdownFunc': shutdownFunc
+};

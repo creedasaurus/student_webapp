@@ -14,149 +14,156 @@
 <body ng-controller="DataTableController as StuCntrl" ng-cloak>
 <div class="container">
 
-<div class="jumbotron text-center">
-    <h1>Student Data Viewer</h1>
-    <p>Data populated from a MySQL database</p>
-    <h5>this is some dffdfsdfssdfsddfsdf info</h5>
-</div>
-
-
-<!--================= STUDENT DATA NAVBAR ================-->
-<!--======================================================-->
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-
-        <!-- Navbar Collapsable (for mobile view) -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navbarCollapse1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand"><img src="img/school.svg" width=25px></a>
-        </div>
-
-        <!-- Navbar Links and Such -->
-        <div class="collapse navbar-collapse" id="navbarCollapse1">
-            <!-- Left Side -->
-            <ul class="nav navbar-nav">
-                <li id="addStudentBut" data-toggle="modal" data-target="#studentFormModal" ng-click="addStudent()"><a>Add Student <span class="sr-only">(current)</span></a></li>
-                <li id="restoreStudentBut"><a>Restore Student</a></li>
-            </ul>
-            <!--Right Side-->
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a id="viewButton" data-toggle="tooltip" data-placement="top" title="Tile View" ng-click="currView==='table' ? currView='tiles': currView='table'">
-                        <span id="viewIcon" class="glyphicon glyphicon-th"></span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <div class="jumbotron text-center">
+        <h1>Student Data Viewer</h1>
+        <p>Data populated from a MySQL database</p>
+        <h5>this is some dffdfsdfssdfsddfsdf info</h5>
     </div>
-</nav>
 
 
-<!--================= DIFFERENT VIEWS ====================-->
-<!--======================================================-->
-<div ng-switch="currView" >
-    <!-------- Table View for Student Data -------->
-    <div ng-switch-when="table">
-        <div id="table-view" class="main-view table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="thead-color">
-                <tr>
-                    <th id="lname" class="orderTable">Full Name <span class="glyphicon glyphicon-menu-right"></span>
-                    </th>
-                    <th id="s_year" class="orderTable">Grade <span class="glyphicon glyphicon-menu-right"></span></th>
-                    <th id="startDate" class="orderTable hidden-xs">Start Date <span
-                            class="glyphicon glyphicon-menu-right"></span></th>
-                    <th id="city" class="orderTable hidden-md hidden-sm hidden-xs">City <span
-                            class="glyphicon glyphicon-menu-right"></span></th>
-                    <th id="state" class="orderTable hidden-sm hidden-xs">State <span
-                            class="glyphicon glyphicon-menu-right"></span></th>
-                    <th id="zip" class="orderTable hidden-md hidden-sm hidden-xs">Zip <span
-                            class="glyphicon glyphicon-menu-right"></span></th>
-                    <th id="edit" class="text-center">Edit <span class=""></span></th>
-                    <th id="delete" class="text-center">Delete <span class=""></span></th>
-                </tr>
-                </thead>
-                <tbody id="studentDataTable">
+    <!--================= STUDENT DATA NAVBAR ================-->
+    <!--======================================================-->
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+
+            <!-- Navbar Collapsable (for mobile view) -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbarCollapse1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand"><img src="img/school.svg" width=25px></a>
+            </div>
+
+            <!-- Navbar Links and Such -->
+            <div class="collapse navbar-collapse" id="navbarCollapse1">
+                <!-- Left Side -->
+                <ul class="nav navbar-nav">
+                    <li id="addStudentBut" data-toggle="modal" data-target="#studentFormModal" ng-click="addStudent()">
+                        <a>Add Student <span class="sr-only">(current)</span></a></li>
+                    <li id="restoreStudentBut"><a>Restore Student</a></li>
+                </ul>
+                <!--Right Side-->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a id="viewButton" data-toggle="tooltip" data-placement="top" title="Tile View"
+                           ng-click="currView==='table' ? currView='tiles': currView='table'">
+                            <span id="viewIcon" class="glyphicon glyphicon-th"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!--================= DIFFERENT VIEWS ====================-->
+    <!--======================================================-->
+    <div ng-switch="currView">
+        <!-------- Table View for Student Data -------->
+        <div ng-switch-when="table">
+            <div id="table-view" class="main-view table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-color">
+                    <tr>
+                        <th id="lname" class="orderTable">Full Name
+                            <span class="glyphicon {{rightArrow}}"></span></th>
+                        <th id="s_year" class="orderTable">Grade
+                            <span class="glyphicon glyphicon-menu-right"></span></th>
+                        <th id="startDate" class="orderTable hidden-xs">Start Date
+                            <span class="glyphicon glyphicon-menu-right"></span></th>
+                        <th id="city" class="orderTable hidden-md hidden-sm hidden-xs">City
+                            <span class="glyphicon glyphicon-menu-right"></span></th>
+                        <th id="state" class="orderTable hidden-sm hidden-xs">State
+                            <span class="glyphicon glyphicon-menu-right"></span></th>
+                        <th id="zip" class="orderTable hidden-md hidden-sm hidden-xs">Zip
+                            <span class="glyphicon glyphicon-menu-right"></span></th>
+                        <th id="edit" class="text-center">Edit <span class=""></span></th>
+                        <th id="delete" class="text-center">Delete <span class=""></span></th>
+                    </tr>
+                    </thead>
+                    <tbody id="studentDataTable">
+                    <!-- data is dynamically created in a script -->
+                    <tr ng-repeat="student in students | orderBy:sortVal" id="${index}" class="clickRow"
+                        ng-click="selectStu(student)">
+                        <td data-toggle="modal" data-target="#studentModal">
+                            {{student.lname}}, {{student.fname}}
+                        </td>
+                        <td data-toggle="modal" data-target="#studentModal">
+                            {{student.s_year}}
+                        </td>
+                        <td data-toggle="modal" data-target="#studentModal"
+                            class="hidden-xs"> {{student.startDate}}
+                        </td>
+                        <td data-toggle="modal" data-target="#studentModal"
+                            class="hidden-md hidden-sm hidden-xs"> {{student.city}}
+                        </td>
+                        <td data-toggle="modal" data-target="#studentModal"
+                            class="hidden-sm hidden-xs"> {{student.state}}
+                        </td>
+                        <td data-toggle="modal" data-target="#studentModal"
+                            class="hidden-md hidden-sm hidden-xs"> {{student.zip}}
+                        </td>
+                        <td data-toggle="modal" data-target="#studentFormModal" class="editCol text-center" title="Edit"
+                            ng-click="editStu()">
+                            <div class="glyphicon glyphicon-pencil editItemButton"></div>
+                        </td>
+                        <td data-toggle="modal" data-target="#confirmDelModal" class="deleteCol text-center"
+                            title="Delete">
+                            <div class="glyphicon glyphicon-remove deleteItemButton"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <!-------- Modal Student View for Displaying Student Data  -------->
+        <div class="modal fade" id="studentModal" role="dialog">
+            <div id="showStudentModal" class="modal-dialog">
+                <student-info-modal></student-info-modal>
+            </div>
+        </div>
+
+        <!-------- Tile View for Student Data :: hidden by default -------->
+        <div id="tile-view" class="main-view" ng-switch-when="tiles">
+
+            <div id="studentDataTiles" class="row">
                 <!-- data is dynamically created in a script -->
-                <tr ng-repeat="student in students" id="${index}" class="clickRow" ng-click="selectStu(student)">
-                    <td data-toggle="modal" data-target="#studentModal">
-                        {{student.lname}}, {{student.fname}}
-                    </td>
-                    <td data-toggle="modal" data-target="#studentModal">
-                        {{student.s_year}}
-                    </td>
-                    <td data-toggle="modal" data-target="#studentModal"
-                        class="hidden-xs"> {{student.startDate}}
-                    </td>
-                    <td data-toggle="modal" data-target="#studentModal"
-                        class="hidden-md hidden-sm hidden-xs"> {{student.city}}
-                    </td>
-                    <td data-toggle="modal" data-target="#studentModal"
-                        class="hidden-sm hidden-xs"> {{student.state}}
-                    </td>
-                    <td data-toggle="modal" data-target="#studentModal"
-                        class="hidden-md hidden-sm hidden-xs"> {{student.zip}}
-                    </td>
-                    <td data-toggle="modal" data-target="#studentFormModal" class="editCol text-center" title="Edit" ng-click="editStu()">
-                        <div class="glyphicon glyphicon-pencil editItemButton"></div>
-                    </td>
-                    <td data-toggle="modal" data-target="#confirmDelModal" class="deleteCol text-center" title="Delete">
-                        <div class="glyphicon glyphicon-remove deleteItemButton"></div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
-    </div>
-
-    <!-------- Modal Student View for Displaying Student Data  -------->
-    <div class="modal fade" id="studentModal" role="dialog">
-        <div id="showStudentModal" class="modal-dialog">
-            <student-info-modal></student-info-modal>
-        </div>
-    </div>
-
-    <!-------- Tile View for Student Data :: hidden by default -------->
-    <div id="tile-view" class="main-view" ng-switch-when="tiles">
-
-        <div id="studentDataTiles" class="row">
-            <!-- data is dynamically created in a script -->
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="student in students">
-                <div class="panel panel-info clickPanel" data-toggle="modal" data-target="#studentModal" ng-click="selectStu(student)">
-                    <div  class="panel-heading ">
-                        <h3 class="panel-title"> {{student.lname}}, {{student.fname}} </h3>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="student in students">
+                    <div class="panel panel-info clickPanel" data-toggle="modal" data-target="#studentModal"
+                         ng-click="selectStu(student)">
+                        <div class="panel-heading ">
+                            <h3 class="panel-title"> {{student.lname}}, {{student.fname}} </h3>
+                        </div>
+                        <div class="panel-body text-center"><img
+                                src="/student-images/{{student.lname}}-{{student.fname}}.png" class="studentPicture">
+                        </div>
                     </div>
-                    <div class="panel-body text-center"><img src="/student-images/{{student.lname}}-{{student.fname}}.png" class="studentPicture"></div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
-
-
-<div class="modal fade" id="studentFormModal" role="dialog">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <!--modal header-->
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h2 class="modal-title text-center">Enter Student Information</h2>
+    <div class="modal fade" id="studentFormModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--modal header-->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title text-center">Enter Student Information</h2>
+                </div>
+                <!--modal body-->
+                <student-form-modal></student-form-modal>
+            </div>
         </div>
-        <!--modal body-->
-        <student-form-modal></student-form-modal>
     </div>
-</div>
-</div>
 
 
     <!--==== RESTORE STUDENT MODAL =====-->

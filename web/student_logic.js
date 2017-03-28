@@ -80,10 +80,24 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
 
 myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($scope, classroomSrvc) {
 
+    let sorts = {
+        'name': ['fname', 'lname']
+    }
+
+    $scope.rightArrow = 'glyphicon-menu-right';
+
     $scope.students = classroomSrvc.getAll();
     $scope.selectedStudent = classroomSrvc.getSelected();
     $scope.states = statesOptions;
     $scope.currView = "table";
+    $scope.sortVal = sorts[name];
+    $scope.sortRev = true;
+
+    $scope.sortBy = function(propertyName) {
+        $scope.sortRev = ($scope.sortVal === propertyName) ? !$scope.sortRev : false;
+        $scope.sortVal = sorts[propertyName];
+    };
+
     $scope.saveStudent = function() {
         console.log('ill save it');
     };
