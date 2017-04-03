@@ -23,14 +23,16 @@ npm start
 To get the app running.
 
 
-You'll need to add a json file in the same folder as `index.js` that is called `pswd.json`. Inside this file should be the password to the mysql connection, and maybe any other passwords needed for different access. Structure it like so:
+You'll want to add a json file in the same folder as `index.js` that is called `s_config.json`. This file will be used to configure the connections to the app including passwords for databases (mysql in this case), IP, and PORT for the app to run on. Here is an example:
 
 ```json
 {
-  "mysql": {
-    "user": "USERNAME",
-    "password": "PASSWORD"
-  }
+    "mysql": {
+      "user": "master",
+      "password": "password"
+    },
+    "PORT":1234,
+    "IP":"127.0.0.1"
 }
 ```
 

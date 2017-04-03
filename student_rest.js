@@ -5,20 +5,23 @@
 let express = require('express');
 let bodyParser = require('body-parser');
 let mysql = require('mysql2');
-let pswds = require('./pswd');
+let nconf = require('nconf');
 let router = express.Router();
 let colors = require('colors');
 
 router.use(bodyParser.json());
-
+nconf.argv()
+    .env()
+    .file({file:'s_config.json'});
 
 let connection = mysql.createConnection({
     host: 'localhost',
-    user: pswds.mysql.user,
-    password: pswds.mysql.password,
+    user: nconf.get('mysql:user'),
+    password: nconf.get('mysql:password'),
     database: 'students',
     dateStrings: 'true'
 });
+
 connection.connect(function (err) {
     if (err) {
         console.error('error connecting: ' + err.code.red);
@@ -41,23 +44,24 @@ let shutdownFunc = () => {
 
 // CREATE
 // - POST
-router.post('/students', function (req, res) {
+// router.post('/students', function (req, res) {
 
-    let student = req.body;
+//     let student = req.body;
 
-    connection.query('INSERT INTO s_info (fname, lname, startDate, street, city, state, zip, phone, s_year) VALUES (?,?,?,?,?,?,?,?,?)',
-        [student.fname, student.lname, student.startDate, student.street, student.city, student.state, student.zip, student.phone, student.s_year],
-        function (err, results, field) {
-            if (err) throw err;
-            let newId = "";
+//     connection.query(
+//          'INSERT INTO s_info (fname, lname, startDate, street, city, state, zip, phone, s_year) VALUES (?,?,?,?,?,?,?,?,?)',
+//      [student.fname, student.lname, student.startDate, student.street, student.city, student.state, student.zip, student.phone, student.s_year],
+//         function (err, results, field) {
+//             if (err) throw err;
+//             let newId = "";
 
-            connection.query('SELECT id FROM s_info ORDER BY id DESC LIMIT 1', function (err, rslts, field) {
-                newId = rslts[0].id;
-            }).on('end', function () {
-                res.status(201).json(newId);
-            });
-        });
-});
+//             connection.query('SELECT id FROM s_info ORDER BY id DESC LIMIT 1', function (err, rslts, field) {
+//                 newId = rslts[0].id;
+//             }).on('end', function () {
+//                 res.status(201).json(newId);
+//             });
+//         });
+// });
 
 
 // READ

@@ -10,7 +10,9 @@ let logger = require('morgan');
 let compression = require('compression');
 let favicon = require('serve-favicon');
 let rest = require('./student_rest');
+// TESTING v
 let otherRest = require('./studentDBDao.js');
+// TESTING ^
 let colors = require('colors');
 
 let app = express();
@@ -29,14 +31,19 @@ app.get('*', function (req, res) {
     res.status(404).sendFile(WEB + '/404Error.html');
 });
 
+let nconf = require('nconf');
+nconf.argv()
+    .env()
+    .file({file:'s_config.json'});
+
 
 //====================== START SERVER =======================
 
-let portNum = 3000;
-let IP = 'localhost';
-let server = app.listen(portNum, IP, function () {
-    console.log("Server Running on " + portNum);
-    console.log(`http://${IP}:${portNum}`.green.underline)
+let PORT = nconf.get("PORT");
+let IP = nconf.get("IP");
+let server = app.listen(PORT, IP, function () {
+    console.log("Server Running on " + PORT);
+    console.log(`http://${IP}:${PORT}`.green.underline)
 });
 
 
