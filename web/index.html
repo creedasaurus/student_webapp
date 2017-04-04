@@ -70,17 +70,17 @@
                 <table class="table table-bordered table-hover">
                     <thead class="thead-color">
                     <tr>
-                        <th id="lname" class="orderTable">Full Name
+                        <th id="lname" class="orderTable" ng-click="sortBy(['lname', 'fname'])">Full Name
                             <span class="glyphicon {{rightArrow}}"></span></th>
-                        <th id="s_year" class="orderTable">Grade
+                        <th id="s_year" class="orderTable" ng-click="sortBy('s_year')">Grade
                             <span class="glyphicon glyphicon-menu-right"></span></th>
-                        <th id="startDate" class="orderTable hidden-xs">Start Date
+                        <th id="startDate" class="orderTable hidden-xs" ng-click="sortBy('startDate')">Start Date
                             <span class="glyphicon glyphicon-menu-right"></span></th>
-                        <th id="city" class="orderTable hidden-md hidden-sm hidden-xs">City
+                        <th id="city" class="orderTable hidden-md hidden-sm hidden-xs" ng-click="sortBy('city')">City
                             <span class="glyphicon glyphicon-menu-right"></span></th>
-                        <th id="state" class="orderTable hidden-sm hidden-xs">State
+                        <th id="state" class="orderTable hidden-sm hidden-xs" ng-click="sortBy('state')">State
                             <span class="glyphicon glyphicon-menu-right"></span></th>
-                        <th id="zip" class="orderTable hidden-md hidden-sm hidden-xs">Zip
+                        <th id="zip" class="orderTable hidden-md hidden-sm hidden-xs" ng-click="sortBy('zip')">Zip
                             <span class="glyphicon glyphicon-menu-right"></span></th>
                         <th id="edit" class="text-center">Edit <span class=""></span></th>
                         <th id="delete" class="text-center">Delete <span class=""></span></th>
@@ -88,7 +88,7 @@
                     </thead>
                     <tbody id="studentDataTable">
                     <!-- data is dynamically created in a script -->
-                    <tr ng-repeat="student in students | orderBy:sortVal" id="${index}" class="clickRow"
+                    <tr ng-repeat="student in students | orderBy:sortVal:reverse" id="${index}" class="clickRow"
                         ng-click="selectStu(student)">
                         <td data-toggle="modal" data-target="#studentModal">
                             {{student.lname}}, {{student.fname}}

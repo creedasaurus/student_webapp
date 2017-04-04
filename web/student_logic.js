@@ -80,9 +80,14 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
 
 myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($scope, classroomSrvc) {
 
-    let sorts = {
-        'name': ['fname', 'lname']
-    }
+    $scope.sorts = {
+        name: ['lname', 'fname'],
+        year: 's_year',
+        start_date: 'startDate',
+        city: 'city',
+        state: 'state',
+        zip: 'zip'
+    };
 
     $scope.rightArrow = 'glyphicon-menu-right';
 
@@ -90,12 +95,13 @@ myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($s
     $scope.selectedStudent = classroomSrvc.getSelected();
     $scope.states = statesOptions;
     $scope.currView = "table";
-    $scope.sortVal = sorts[name];
-    $scope.sortRev = true;
+    $scope.sortVal = ['lname', 'fname'];
+    $scope.reverse = true;
 
     $scope.sortBy = function(propertyName) {
-        $scope.sortRev = ($scope.sortVal === propertyName) ? !$scope.sortRev : false;
-        $scope.sortVal = sorts[propertyName];
+        console.log(propertyName);
+        $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.sortVal = propertyName;
     };
 
     $scope.saveStudent = function() {
@@ -103,7 +109,6 @@ myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($s
     };
 
     $scope.selectStu = function (stu) {
-
         classroomSrvc.selectStudent(stu);
     };
 

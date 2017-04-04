@@ -41,6 +41,8 @@ nconf.argv()
 
 let PORT = nconf.get("PORT");
 let IP = nconf.get("IP");
+console.log(PORT);
+console.log(IP);
 let server = app.listen(PORT, IP, function () {
     console.log("Server Running on " + PORT);
     console.log(`http://${IP}:${PORT}`.green.underline)
