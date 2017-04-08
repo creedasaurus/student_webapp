@@ -28,6 +28,7 @@ app.use('/api/v1', rest.router);
 app.use(express.static(WEB)); //Website Files
 app.use('/student-images', express.static('student-images')); //Student images
 app.get('*', function (req, res) {
+    res.set("Connection", "close");
     res.status(404).sendFile(WEB + '/404Error.html');
 });
 
