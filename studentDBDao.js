@@ -31,5 +31,3 @@ exports.read = function(err, callbackFunc) {
 // 	console.log('in callback');
 // 	console.log(task);
 // });
-
-
