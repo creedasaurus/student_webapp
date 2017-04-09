@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Student Data Viewer - Creed Haymond</title>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" sizes="16x16">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link rel="stylesheet" href="lib/css/bootswatch-bootstrap-3.3.6.min.css">
     <link rel="stylesheet" href="studentData.css">
     <script src="lib/js/angular.js"></script>
@@ -64,24 +66,36 @@
     <!--================= DIFFERENT VIEWS ====================-->
     <!--======================================================-->
     <div ng-switch="currView">
-        <!-------- Table View for Student Data -------->
+        <!--- Table View for Student Data --->
         <div ng-switch-when="table">
             <div id="table-view" class="main-view table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead class="thead-color">
                     <tr>
-                        <th id="lname" class="orderTable" ng-click="sortBy(['lname', 'fname'])">Full Name
-                            <span class="glyphicon {{rightArrow}}"></span></th>
-                        <th id="s_year" class="orderTable" ng-click="sortBy('s_year')">Grade
-                            <span class="glyphicon glyphicon-menu-right"></span></th>
-                        <th id="startDate" class="orderTable hidden-xs" ng-click="sortBy('startDate')">Start Date
-                            <span class="glyphicon glyphicon-menu-right"></span></th>
+                        <th id="lname" class="orderTable" ng-click="sortBy('name')">Full Name
+                            <span class="ascend_descend material-icons"
+                               ng-show="propertyName === 'name'"
+                               ng-class="{reverse: reverse}"></span></th>
+                        <th id="s_year" class="orderTable" ng-click="sortBy('year')">Grade
+                          <span class="ascend_descend material-icons"
+                             ng-show="propertyName === 'year'"
+                             ng-class="{reverse: reverse}"></span></th>
+                        <th id="startDate" class="orderTable hidden-xs" ng-click="sortBy('start_date')">Start Date
+                          <span class="ascend_descend material-icons"
+                             ng-show="propertyName === 'start_date'"
+                             ng-class="{reverse: reverse}"></span></th>
                         <th id="city" class="orderTable hidden-md hidden-sm hidden-xs" ng-click="sortBy('city')">City
-                            <span class="glyphicon glyphicon-menu-right"></span></th>
+                          <span class="ascend_descend material-icons"
+                             ng-show="propertyName === 'city'"
+                             ng-class="{reverse: reverse}"></span></th>
                         <th id="state" class="orderTable hidden-sm hidden-xs" ng-click="sortBy('state')">State
-                            <span class="glyphicon glyphicon-menu-right"></span></th>
+                          <span class="ascend_descend material-icons"
+                             ng-show="propertyName === 'state'"
+                             ng-class="{reverse: reverse}"></span></th>
                         <th id="zip" class="orderTable hidden-md hidden-sm hidden-xs" ng-click="sortBy('zip')">Zip
-                            <span class="glyphicon glyphicon-menu-right"></span></th>
+                          <span class="ascend_descend material-icons"
+                             ng-show="propertyName === 'zip'"
+                             ng-class="{reverse: reverse}"></span></th>
                         <th id="edit" class="text-center">Edit <span class=""></span></th>
                         <th id="delete" class="text-center">Delete <span class=""></span></th>
                     </tr>

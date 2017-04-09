@@ -114,7 +114,11 @@ router.get('/students/:id.json', function (req, res) {
 router.get('/students.json', function (req, res) {
     console.log("got to the GET!");
     let ids = [];
+
+
     res.set("Connection", "close");
+
+
     connection.query('SELECT id FROM s_info WHERE active = true', [], function (error, results, fields) {
 
         if (error) {

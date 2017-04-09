@@ -94,14 +94,17 @@ myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($s
     $scope.students = classroomSrvc.getAll();
     $scope.selectedStudent = classroomSrvc.getSelected();
     $scope.states = statesOptions;
-    $scope.currView = "table";
+    $scope.currView = 'table';
     $scope.sortVal = ['lname', 'fname'];
     $scope.reverse = true;
+    $scope.propertyName = '';
 
     $scope.sortBy = function(propertyName) {
         console.log(propertyName);
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
-        $scope.sortVal = propertyName;
+        $scope.propertyName = propertyName;
+        $scope.sortVal = $scope.sorts[propertyName];
+        console.log($scope.sorts[propertyName]);
     };
 
     $scope.saveStudent = function() {
