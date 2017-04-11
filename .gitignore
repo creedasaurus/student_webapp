@@ -1,4 +1,6 @@
 .idea/workspace.xml
+.idea/markdown-navigator*
 node_modules
-pswd.json
+*.log
 .DS_Store
+s_config.json
