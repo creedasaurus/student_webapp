@@ -15,13 +15,16 @@ let otherRest = require('./studentDBDao.js');
 // TESTING ^
 let colors = require('colors');
 
+
 let app = express();
+
 
 app.disable('x-powered-by');
 app.use(logger('dev'));
 app.use(compression());
 app.use(favicon(WEB + '/img/favicon.ico'));
 app.use('/api/v1', rest.router);
+
 
 
 //====================== STATIC FILES =======================

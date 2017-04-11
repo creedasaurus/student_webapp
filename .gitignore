@@ -1,6 +1,14 @@
-.idea/workspace.xml
-node_modules
-s_config.json
 .DS_Store
-npm-debug.log
+
+# IDEA
+.idea/workspace.xml
 .idea/markdown-navigator*
+
+# NODE
+node_modules
+
+# CONFIG
+s_config.json
+
+# LOGS
+*.log
