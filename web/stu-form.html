@@ -1,0 +1,98 @@
+<div class="modal-body">
+    <form id="studentForm" class="form-horizontal">
+        <fieldset>
+            <legend class="text-center">Personal Information</legend>
+            <!--First Name Field -->
+            <div class="form-group">
+                <label for="inputFirstName" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">First Name</label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+                    <input type="text" class="form-control" id="inputFirstName"
+                           placeholder="First Name" ng-model="selectedStudent.fname">
+                </div>
+            </div>
+            <!--Last Name Field -->
+            <div class="form-group">
+                <label for="inputLastName" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Last
+                    Name</label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+                    <input type="text" class="form-control" id="inputLastName"
+                           placeholder="Last Name" ng-model="selectedStudent.lname">
+                </div>
+            </div>
+            <!-- Phone Number Field -->
+            <div class="form-group">
+                <label for="inputPhone" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Phone
+                    Number</label>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
+                    <input type="text" class="form-control" id="inputPhone"
+                           placeholder="000-000-0000" ng-model="selectedStudent.phone">
+                </div>
+            </div>
+            <!-- Start Date Field -->
+            <div class="form-group">
+                <label for="inputStartDate" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Start
+                    Date</label>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
+                    <input type="text" class="form-control" id="inputStartDate"
+                           placeholder="yyyy-MM-dd" ng-model="selectedStudent.startDate">
+                </div>
+            </div>
+
+            <!-- Year Field -->
+            <div class="form-group">
+                <label for="yearInSchool" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Year
+                    in School</label>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
+                    <select class="form-control" id="yearInSchool"
+                            ng-model="selectedStudent.s_year" ng-options="year for year in [1,2,3,4]"></select>
+                </div>
+            </div>
+
+            <legend class="text-center">Address</legend>
+            <!-- Address Line Field -->
+            <div class="form-group">
+                <label for="inputAddressL1" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Address</label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+                    <input type="text" class="form-control" id="inputAddressL1"
+                           placeholder="Street Address" ng-model="selectedStudent.street" required>
+                </div>
+            </div>
+            <!-- City Field -->
+            <div class="form-group">
+                <label for="inputCity"
+                       class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">City</label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+                    <input type="text" class="form-control" id="inputCity"
+                           placeholder="City" ng-model="selectedStudent.city" required>
+                </div>
+            </div>
+
+            <!-- State Field -->
+            <div class="form-group">
+                <label for="inputState"
+                       class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">State</label>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
+                    <select class="form-control" id="inputState" name="state"
+                            ng-model="selectedStudent.state" ng-options="stateAbb as stateName for (stateAbb, stateName) in states"></select>
+                </div>
+            </div> <!-- State Selector -->
+
+            <!-- Zip Field -->
+            <div class="form-group">
+                <label for="inputZip"
+                       class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Zip</label>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
+                    <input type="text" class="form-control" id="inputZip"
+                           placeholder="ZIP" ng-model="selectedStudent.zip">
+                </div>
+            </div>
+
+            <hr>
+
+            <div id="saveButtonDiv" class="text-center">
+                <input id="formSubmit" type="submit" class="btn btn-success" value="Save" ng-click="saveStudent()"  data-dismiss="modal">
+                <!--<button type="submit" form="studentForm" value="Submit">Submit</button>-->
+            </div>
+        </fieldset>
+    </form>
+</div>

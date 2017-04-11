@@ -11,10 +11,13 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "colors": "^1.1.2",
     "compression": "^1.6.2",
     "express": "^4.14.0",
+    "mongodb": "^2.2.25",
     "morgan": "^1.7.0",
     "mysql2": "^1.1.2",
+    "nconf": "^0.8.4",
     "serve-favicon": "^2.3.2"
   },
   "devDependencies": {},

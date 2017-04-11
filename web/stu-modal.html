@@ -1,0 +1,24 @@
+<div class="modal-content text-center">
+<div class="modal-header">
+    <h4 class="modal-title"> {{selectedStudent.lname}}, {{selectedStudent.fname}}</h4>
+</div>
+<div class="modal-body">
+    <div class="panel-body">
+        <div id="studentModalDataFrame">
+            <div class="studentModalData">
+                <img id="modalPicture"
+                     src="/student-images/{{selectedStudent.lname}}-{{selectedStudent.fname}}.png"
+                     class="studentPicture">
+                <p><b>Year: </b>{{selectedStudent.s_year}}</p>
+                <p><b>Start Date: </b>{{selectedStudent.startDate}}</p>
+                <p><b>Phone: </b>{{selectedStudent.phone}}</p>
+                <p><b>Address: </b><br/>{{selectedStudent.street}}<br/>
+                    {{selectedStudent.city}}, {{selectedStudent.state}} {{selectedStudent.zip}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
