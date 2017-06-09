@@ -9,10 +9,12 @@ let fs = require('fs');
 let logger = require('morgan');
 let compression = require('compression');
 let favicon = require('serve-favicon');
-let rest = require('./student_rest');
+// let rest = require('./student_rest');
 // TESTING v
-let otherRest = require('./studentDBDao.js');
+// let otherRest = require('./studentDBDao.js');
 // TESTING ^
+
+let pgRest = require('./studentPgDaO');
 let colors = require('colors');
 
 
@@ -23,7 +25,7 @@ app.disable('x-powered-by');
 app.use(logger('dev'));
 app.use(compression());
 app.use(favicon(WEB + '/img/favicon.ico'));
-app.use('/api/v1', rest.router);
+app.use('/api/v1', pgRest);
 
 
 
