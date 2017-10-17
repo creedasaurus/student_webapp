@@ -26,7 +26,22 @@ pool.on('error', function (e, client) {
     // handles an error from a client here
 });
 
-router.get('/students.json');
+router.get('/students.json', function (req, res) {
+        console.log("got to the GET!");
+        let ids = [];
+        res.set("Connection", "close");
+        pool.query('SELECT id FROM s_info WHERE active = true', [], function (error, results, fields) {
+            if (error) {
+                console.log("Error: " + error);
+            } else {
+                for (let stu in results) {
+                    ids.push(results[stu].id);
+                }
+                console.log(ids);
+                res.status(200).json(ids);
+            }
+        });
+});
 
 // - GET :: just one student (specified in URL)
 router.get('/students/:id.json', function (req, res) {
