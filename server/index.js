@@ -1,5 +1,5 @@
 console.log('Loading Server');
-const WEB = __dirname + '/web';
+const WEB = __dirname.replace('server', 'web');
 
 //===================== Get Primary Modules =======================
 let express = require('express');
@@ -42,14 +42,13 @@ nconf.argv()
     .env()
     .file({file:'s_config.json'});
 
-
 //====================== START SERVER =======================
 
 let PORT = nconf.get("PORT");
-let IP = nconf.get("IP");
+let IP = '0.0.0.0';
 console.log(PORT);
 console.log(IP);
-let server = app.listen(PORT, IP, function () {
+let server = app.listen(PORT, function () {
     console.log("Server Running on " + PORT);
     console.log(`http://${IP}:${PORT}`.green.underline)
 });

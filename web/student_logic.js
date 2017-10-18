@@ -23,8 +23,8 @@ myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {
 
                 getStudentCalls.push($http.get(`/api/v1/students/${res.data[stu]}.json`)
                     .then(function (res) {
-                            students.push(res.data);
-                        }
+                        students.push(res.data[0]);
+                    }
                     ));
             }
         });
@@ -99,13 +99,14 @@ myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($s
     $scope.reverse = true;
     $scope.propertyName = '';
 
-    $scope.sortBy = function(propertyName) {
+    $scope.sortBy = function (propertyName) {
+        console.log($scope.students);
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
         $scope.propertyName = propertyName;
         $scope.sortVal = $scope.sorts[propertyName];
     };
 
-    $scope.saveStudent = function() {
+    $scope.saveStudent = function () {
         console.log('ill save it');
     };
 
@@ -115,7 +116,7 @@ myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($s
 
     $scope.addStudent = function () {
         $scope.selectedStudent = {};
-        $scope.saveStudent = function() {
+        $scope.saveStudent = function () {
             classroomSrvc.addStudent($scope.selectedStudent);
             $scope.selectedStudent = classroomSrvc.getSelected();
         };
@@ -123,7 +124,7 @@ myapp.controller('DataTableController', ['$scope', 'classroomSrvc', function ($s
 
     $scope.editStu = function () {
         console.log("edit stud clicked");
-        $scope.saveStudent = function() {
+        $scope.saveStudent = function () {
             classroomSrvc.editStudent();
         };
     };
