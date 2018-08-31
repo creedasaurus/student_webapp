@@ -1,7 +1,7 @@
 /**
  * Created by creed on 3/10/2017.
  */
-let angular = require('angular');
+
 let myapp = angular.module('studentDataApp', []);
 
 myapp.factory('classroomSrvc', ['$http', '$q', function ($http, $q) {

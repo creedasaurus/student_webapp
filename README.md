@@ -5,35 +5,20 @@ This was a node/bootstrap/js assignment that I had during my Web 2 class. I deci
 Currently I have the node backend using MySQL, so you may have to work on getting that set up. Maybe I'll stub in some code that'll help to keep it working even if it doesn't have MySQL to connect to.
 
 
-## Requirements
-+ [nodejs](https://nodejs.org)
-+ [mysql](https://www.mysql.com/) with a "students" database setup
-
-
-
 ## Setup
-You'll want to run:
-```sh
-npm install
-```
-```sh
-npm start
-```
+Dependencies:
+- Docker
+- Docker-compose
 
-To get the app running.
+To get the app running, you'll need to create a volume for the database to persist on (may not be needed later on)
+`docker volume create --name=test-db-vol`
 
+Boot the services up with:
+`docker-compose up`
+And then visit: `localhost:8080`
 
-You'll want to add a json file in the same folder as `index.js` that is called `s_config.json`. This file will be used to configure the connections to the app including passwords for databases (mysql in this case), IP, and PORT for the app to run on. Here is an example:
+You will actually need to use the `scripts/buildstudents.sql` script to build the database. I haven't gotten it to run when the database boots up. But you can access Pgadmin4 on `localhost:5000` and then add the database there with using the hostname: `db` and the username and password listed in the `docker-compose.yml`. You can then run the script from there if you want.
 
-```json
-{
-    "mysql": {
-      "user": "master",
-      "password": "password"
-    },
-    "PORT":1234,
-    "IP":"127.0.0.1"
-}
-```
+To stop:
+`docker-compose down`
 
-This file should remain unversioned so it never gets pushed to Github or anything. I have it so I can keep credentials up to date without worrying about committing them.

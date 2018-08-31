@@ -14,9 +14,9 @@ let Pool = require('pg').Pool;
 let pool = new Pool({
     user: nconf.get('postgres:user'),
     password: nconf.get('postgres:password'),
-    host: 'db',
-    port: '5432',
-    database: 'school',
+    host: nconf.get('postgres:host'),
+    port: nconf.get('postgres:port'),
+    database: nconf.get('postgres:database'),
     max: 10,
     idleTimeoutMillis: 1000
 });
@@ -27,10 +27,9 @@ pool.on('error', function (e, client) {
 });
 
 router.get('/students.json', function (req, res) {
-        console.log("got to the GET!");
         let ids = [];
         res.set("Connection", "close");
-        pool.query('SELECT id FROM school_sch.s_info WHERE active = true', [], function (error, results, fields) {
+        pool.query('SELECT id FROM s_info WHERE active = true', [], function (error, results, fields) {
             if (error) {
                 console.log("Error: " + error);
             } else {
@@ -47,7 +46,7 @@ router.get('/students/:id.json', function (req, res) {
 
     console.log(parseInt(id))
     res.set("Connection", "close");
-    pool.query('SELECT * FROM school_sch.s_info WHERE id=$1::int',[id], function (err, result) {
+    pool.query('SELECT * FROM s_info WHERE id=$1::int',[id], function (err, result) {
         if (err) {
             console.log(err);
         } else {
