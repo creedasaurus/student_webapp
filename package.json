@@ -10,7 +10,7 @@
   "author": "Creed Haymond",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.6.7",
+    "angular": "^1.7.9",
     "body-parser": "^1.15.2",
     "colors": "^1.4.0",
     "compression": "^1.7.4",
