@@ -19,7 +19,7 @@
     "morgan": "^1.9.1",
     "mysql2": "^2.1.0",
     "nconf": "^0.8.4",
-    "serve-favicon": "^2.3.2"
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "pg": "^7.17.0"
